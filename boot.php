@@ -4,7 +4,7 @@
 
 
 if (rex::isBackend()) {
-    $addon = rex_addon::get('columns');
+    $addon = rex_addon::get('slice_columns');
 
     // rex_view::addCssFile($addon->getAssetsUrl('gridstack.min.css'));
     rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
