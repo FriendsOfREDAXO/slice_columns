@@ -1,0 +1,26 @@
+.rex-slices {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.rex-slice, .dragdrop {
+    width: 100%;
+    padding: 5px;
+    margin: 0;
+}
+
+.dragdrop > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.grid-stack {
+  background: lightgoldenrodyellow;
+}
+
+.grid-stack-item-content {
+  color: #2c3e50;
+  text-align: center;
+  background-color: #18bc9c;
+}
