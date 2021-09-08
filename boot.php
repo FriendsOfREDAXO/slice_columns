@@ -15,7 +15,7 @@ if (rex::isBackend()) {
     // rex_view::addJsFile($addon->getAssetsUrl('columns_gridstack.js'));
 
     // add buttons to slice menu
-    rex_extension::register('STRUCTURE_CONTENT_SLICE_MENU', ['columns', 'addButtons']);
+    rex_extension::register('SLICE_MENU', ['columns', 'addButtons']);
 
     rex_extension::register('SLICE_SHOW', array('columns', 'show'));
 } else {

@@ -8,35 +8,56 @@ class Columns
     {
         $items = (array) $ep->getSubject();
         $items[] = $btn;
+        dump($items);
         $ep->setSubject($items);
     }
 
 
     public static function addButtons(rex_extension_point $ep)
     {
-        foreach (['copy', 'cut'] as $type) {
-            static::addButtonm($ep, [
-                'hidden_label' => 'HIDDEN LABEL',
-                // 'url' => rex_url::backendController([
-                //     'page' => 'content/edit',
-                //     'article_id' => $ep->getParam('article_id'),
-                //     'bloecks' => 'cutncopy',
-                //     'module_id' => $ep->getParam('module_id'),
-                //     'slice_id' => $ep->getParam('slice_id'),
-                //     'clang' => $ep->getParam('clang'),
-                //     'ctype' => $ep->getParam('ctype'),
-                //     'revision' => 1,
-                //     'cuc_action' => $type,
-                // ]),
+        $ep->addAdditionalActions([
+            'smallerButton' => [
+                'label' => '->||<-',
                 'attributes' => [
-                    'class' => ['btn-' . $type],
-                    'title' => 'TITLE',
-                    'data-bloecks-cutncopy-iscopied' => 0 && ('edit' === $type) ? 'true' : 'false',
-                    'data-pjax-no-history' => 'true',
-                ],
-                'icon' => '',
-            ]);
-        }
+                    "class" => ['btn-default btn_smaller']
+                ]
+            ]
+        ]);
+
+        $ep->addAdditionalActions([
+            'widerButton' => [
+                'label' => '|<- ->|',
+                'attributes' => [
+                    "class" => ['btn-default btn_wider']
+                ]
+            ]
+        ]);
+
+        // dump($ep);
+
+        // foreach (['copy', 'cut'] as $type) {
+        //     static::addButtonm($ep, [
+        //         'hidden_label' => 'HIDDEN LABEL',
+        //         // 'url' => rex_url::backendController([
+        //         //     'page' => 'content/edit',
+        //         //     'article_id' => $ep->getParam('article_id'),
+        //         //     'bloecks' => 'cutncopy',
+        //         //     'module_id' => $ep->getParam('module_id'),
+        //         //     'slice_id' => $ep->getParam('slice_id'),
+        //         //     'clang' => $ep->getParam('clang'),
+        //         //     'ctype' => $ep->getParam('ctype'),
+        //         //     'revision' => 1,
+        //         //     'cuc_action' => $type,
+        //         // ]),
+        //         'attributes' => [
+        //             'class' => ['btn-' . $type],
+        //             'title' => 'TITLE',
+        //             'data-bloecks-cutncopy-iscopied' => 0 && ('edit' === $type) ? 'true' : 'false',
+        //             'data-pjax-no-history' => 'true',
+        //         ],
+        //         'icon' => '',
+        //     ]);
+        // }
     }
 
     public static function show($ep)
@@ -65,7 +86,7 @@ class Columns
 
 
                 // sortablejs
-                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-id="' . $ep->getParam('slice_id') . '"><ul>' . $subject . '</ul></li>';
+                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
 
 
                 // gridstack
@@ -114,7 +135,7 @@ class Columns
             $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
         } else {
             $subject =  "\n" .
-                "echo '<div class=\"" . 'col-sm-' . $size*2 . "\">'; // bloecks_columns" .
+                "echo '<div class=\"" . 'col-sm-' . $size * 2 . "\">'; // bloecks_columns" .
                 "\n\n" .
                 $subject .
                 "\n" .

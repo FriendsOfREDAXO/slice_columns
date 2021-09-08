@@ -13,17 +13,22 @@ class rex_api_sorter extends rex_api_function
 
         if ($function === 'updatewidth') {
             $slice = rex_request('slice', 'int', 0);
+            $article_id = rex_request('article', 'int', 0);
             $width = rex_request('width', 'string', '');
 
             $sql = rex_sql::factory();
             $sql->setQuery('update rex_article_slice set slice_size = :size where id = :id', ['size' => $width, 'id' => $slice]);
 
-            echo json_encode([$function, $slice, $width]);
+            rex_article_cache::delete($article_id);
+
+            echo json_encode([$function, $slice, $width, 'article_id' => $article_id]);
             exit;
         }
 
         if ($function === 'updateorder') {
+            $article_id = rex_request('article', 'int', 0);
             $order = rex_request('order', 'string', '');
+
             $order = json_decode($order);
             array_pop($order);
 
@@ -32,11 +37,12 @@ class rex_api_sorter extends rex_api_function
                 $sql->setQuery('update rex_article_slice set priority = :prio where id = :id', ['prio' => $key, 'id' => $value]);
             }
 
+            rex_article_cache::delete($article_id);
 
             // $sql = rex_sql::factory();
             // $sql->setQuery('update rex_article_slice set slice_size = :size where id = :id', ['size' => $width , 'id' => $slice]);
 
-            echo json_encode([$function, $order]);
+            echo json_encode([$function, $order, 'article_id' => $article_id]);
             exit;
         }
 

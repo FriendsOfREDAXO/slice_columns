@@ -23,7 +23,7 @@ $(document).on("rex:ready", function () {
         }
       );
 
-      // console.log(evt.item.getAttribute("data-id"));
+      // console.log(evt.item.getAttribute("data-slice-id"));
     },
   });
 
@@ -35,8 +35,8 @@ $(document).on("rex:ready", function () {
   // }
   // console.log(store);
 
-  const btns_wider = document.getElementsByClassName("btn-cut");
-  const btns_smaler = document.getElementsByClassName("btn-copy");
+  const btns_wider = document.getElementsByClassName("btn_wider");
+  const btns_smaler = document.getElementsByClassName("btn_smaller");
 
   for (var i = 0; i < btns_smaler.length; i++) {
     btns_smaler[i].addEventListener("click", smaller);
@@ -54,7 +54,8 @@ $(document).on("rex:ready", function () {
     width = 100 * ((attr_width - 1) / 6) + "%";
     
     parent.style.width = width;
-    slice_id = parent.getAttribute("data-id");
+    slice_id = parent.getAttribute("data-slice-id");
+    article_id = parent.getAttribute("data-article-id");
 
     // update data-width attribute
     parent.setAttribute(
@@ -67,6 +68,7 @@ $(document).on("rex:ready", function () {
       {
         function: "updatewidth",
         slice: slice_id,
+        article: article_id,
         width: parent.getAttribute("data-width"),
       },
       function (result) {
@@ -84,7 +86,8 @@ $(document).on("rex:ready", function () {
     width = 100 * ((attr_width + 1) / 6) + "%";
     
     parent.style.width = width;
-    slice_id = parent.getAttribute("data-id");
+    slice_id = parent.getAttribute("data-slice-id");
+    article_id = parent.getAttribute("data-article-id");
 
     // update data-width attribute
     parent.setAttribute(
@@ -97,6 +100,7 @@ $(document).on("rex:ready", function () {
       {
         function: "updatewidth",
         slice: slice_id,
+        article: article_id,
         width: parent.getAttribute("data-width"),
       },
       function (result) {
