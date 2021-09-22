@@ -15,9 +15,14 @@ class Columns
 
     public static function addButtons(rex_extension_point $ep)
     {
+
+
+        $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
+        $compress = rex_addon::get('slice_columns')->getAssetsUrl('outline_compress_black_24dp.png');
+
         $ep->addAdditionalActions([
             'smallerButton' => [
-                'label' => '->||<-',
+                'label' => '<img src="' . $compress . '">',
                 'attributes' => [
                     "class" => ['btn-default btn_smaller']
                 ]
@@ -26,7 +31,7 @@ class Columns
 
         $ep->addAdditionalActions([
             'widerButton' => [
-                'label' => '|<- ->|',
+                'label' => '<img src="' . $expand . '">',
                 'attributes' => [
                     "class" => ['btn-default btn_wider']
                 ]
@@ -81,7 +86,7 @@ class Columns
                 $width = $res->getValue('slice_size');
 
                 if ($width == '') {
-                    $width = 6;
+                    $width = $number_columns;
                 }
 
                 $css_width = 100 * ($width / $number_columns) . '%';
@@ -95,7 +100,8 @@ class Columns
 
 
                 // sortablejs
-                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $handler . '<ul>' . $subject . '</ul></li>';
+                // $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $handler . '<ul>' . $subject . '</ul></li>';
+                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
 
 
                 // gridstack

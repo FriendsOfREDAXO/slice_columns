@@ -23,8 +23,11 @@ $(document).on("rex:ready", function () {
     // var element = document.getElementsByClassName("dragdrop")[0];
 
     var list = Sortable.create(element, {
-      handle: ".slice_columns_handler",
+      // handle: ".slice_columns_handler",
+      handle: ".panel-heading",
       dataIdAttr: "data-slice-id",
+      animation: 150,
+      ghostClass: 'slice_columns_ghost_class',
       onChange: function (evt) {
         // console.log("old: " + evt.oldDraggableIndex);
         // console.log("new: " + evt.newDraggableIndex);
