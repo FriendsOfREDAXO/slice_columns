@@ -72,6 +72,9 @@ class Columns
                 // dump($ep);
                 // dump($subject);
 
+                $addon = rex_addon::get('slice_columns');
+                $number_columns = $addon->getConfig('slice_columns_number_columns');
+
                 $sql = rex_sql::factory();
                 $res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $ep->getParam('slice_id')]);
 
@@ -81,12 +84,18 @@ class Columns
                     $width = 6;
                 }
 
-                $css_width = 100 * ($width / 6) . '%';
+                $css_width = 100 * ($width / $number_columns) . '%';
                 $css_width = str_replace(",", ".", $css_width);
 
 
+                $handler = '
+                <span class="fa fa-arrows slice_columns_handler">handle</span>
+                ';
+
+
+
                 // sortablejs
-                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
+                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $handler . '<ul>' . $subject . '</ul></li>';
 
 
                 // gridstack
@@ -135,7 +144,7 @@ class Columns
             $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
         } else {
             $subject =  "\n" .
-                "echo '<div class=\"" . 'col-sm-' . $size * 2 . "\">'; // bloecks_columns" .
+                "echo '<div class=\"" . 'col-sm-' . $size . "\">'; // bloecks_columns" .
                 "\n\n" .
                 $subject .
                 "\n" .

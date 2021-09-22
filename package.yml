@@ -10,6 +10,15 @@ requires:
   php:
     version: '>=7.1'
 
+page:
+  title: Slice-Columns
+  perm: meinaddon[]
+  icon: rex-icon fa-columns
+  subpages:
+    settings:  
+      title: Einstellungen
+      icon: rex-icon fa-cog
+  
 
 installer_ignore:
     - .git

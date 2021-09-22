@@ -6,13 +6,10 @@
 if (rex::isBackend()) {
     $addon = rex_addon::get('slice_columns');
 
-    // rex_view::addCssFile($addon->getAssetsUrl('gridstack.min.css'));
     rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
 
     rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
-    // rex_view::addJsFile($addon->getAssetsUrl('gridstack-h5.js'));
     rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
-    // rex_view::addJsFile($addon->getAssetsUrl('columns_gridstack.js'));
 
     // add buttons to slice menu
     rex_extension::register('SLICE_MENU', ['columns', 'addButtons']);
