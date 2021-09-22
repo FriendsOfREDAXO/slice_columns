@@ -140,11 +140,16 @@ class Columns
 
         // return $subject;
 
+        $addon = rex_addon::get('slice_columns');
+        $definitions = $addon->getConfig('definitions');
+        $definitions = json_decode($definitions, true);
+
+
         if (($p = strpos($subject, $find)) !== false) {
             $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
         } else {
             $subject =  "\n" .
-                "echo '<div class=\"" . 'col-sm-' . $size . "\">'; // bloecks_columns" .
+                "echo '<div class=\"" . $definitions[$size] . "\">'; // bloecks_columns" .
                 "\n\n" .
                 $subject .
                 "\n" .

@@ -42,7 +42,7 @@ class rex_api_sorter extends rex_api_function
             // $sql = rex_sql::factory();
             // $sql->setQuery('update rex_article_slice set slice_size = :size where id = :id', ['size' => $width , 'id' => $slice]);
 
-            echo json_encode([$function, $order, 'article_id' => $article_id]);
+            echo json_encode([$function, $order, $article_id]);
             exit;
         }
 

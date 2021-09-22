@@ -19,6 +19,24 @@ page:
       title: Einstellungen
       icon: rex-icon fa-cog
   
+default_config:
+  slice_columns_number_columns: 12
+  definitions: '{
+    "1": "col-sm-1",
+    "2": "col-sm-2",
+    "3": "col-sm-3",
+    "4": "col-sm-4",
+    "5": "col-sm-5",
+    "6": "col-sm-6",
+    "7": "col-sm-7",
+    "8": "col-sm-8",
+    "9": "col-sm-9",
+    "10": "col-sm-10",
+    "11": "col-sm-11",
+    "12": "col-sm-12"
+    }
+    '
+
 
 installer_ignore:
     - .git

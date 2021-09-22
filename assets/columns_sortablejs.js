@@ -24,6 +24,7 @@ $(document).on("rex:ready", function () {
 
     var list = Sortable.create(element, {
       handle: ".slice_columns_handler",
+      dataIdAttr: "data-slice-id",
       onChange: function (evt) {
         // console.log("old: " + evt.oldDraggableIndex);
         // console.log("new: " + evt.newDraggableIndex);
@@ -32,9 +33,12 @@ $(document).on("rex:ready", function () {
         // console.log("Widths:");
         // console.log(store);
 
+        let h = document.getElementsByClassName("dragdrop")[0]
+        var article_id = h.getAttribute("data-article-id")
+
         $.post(
           "/index.php?rex-api-call=sorter",
-          { function: "updateorder", order: JSON.stringify(list.toArray()) },
+          { function: "updateorder", order: JSON.stringify(list.toArray()), article: article_id },
           function (result) {
             console.log(result);
           }
