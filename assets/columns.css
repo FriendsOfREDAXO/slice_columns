@@ -44,3 +44,7 @@
 .slice_columns_ghost_class {
   background-color: lightblue;
 }
+
+.slice_columns_no_padding {
+  padding: 0 !important;
+}
