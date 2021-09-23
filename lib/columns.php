@@ -22,7 +22,7 @@ class Columns
 
         $ep->addAdditionalActions([
             'smallerButton' => [
-                'label' => '<img height="24px" src="' . $compress . '">',
+                'label' => '<img height="22px" src="' . $compress . '">',
                 'attributes' => [
                     "class" => ['btn-default btn_smaller slice_columns_no_padding']
                 ]
@@ -31,14 +31,14 @@ class Columns
 
         $ep->addAdditionalActions([
             'widerButton' => [
-                'label' => '<img height="24px" src="' . $expand . '">',
+                'label' => '<img height="22px" src="' . $expand . '">',
                 'attributes' => [
                     "class" => ['btn-default btn_wider slice_columns_no_padding']
                 ]
             ]
         ]);
 
-        // dump($ep);
+
 
         // foreach (['copy', 'cut'] as $type) {
         //     static::addButtonm($ep, [

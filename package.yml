@@ -21,6 +21,7 @@ page:
   
 default_config:
   slice_columns_number_columns: 12
+  min_width_column: 1
   definitions: '{
     "1": "col-sm-1",
     "2": "col-sm-2",

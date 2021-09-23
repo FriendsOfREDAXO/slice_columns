@@ -11,6 +11,12 @@ $field->setNotice('Wie viele Spalten unterstützt das Frontend Framework?');
 $field->getValidator()->add('type', 'Muss eine Zahl sein', 'int');
 
 
+$field = $form->addTextField('min_width_column');
+$field->setLabel('Spalten-Minimum');
+$field->setNotice('Kleiner als dieser Wert darf eine Spalte nicht werden.');
+$field->getValidator()->add('type', 'Muss eine Zahl sein', 'int');
+
+
 $field = $form->addTextAreaField('definitions');
 $field->setLabel('Mappings für Breiten zu CSS-Klassen');
 $field->setNotice('');

@@ -4,6 +4,7 @@ $(document).on("rex:ready", function () {
     console.log("no editable slice found");
   } else {
     var number_columns = 1;
+    var min_width_column = 1;
     var store = {};
 
     console.log("initialising columns...");
@@ -11,11 +12,13 @@ $(document).on("rex:ready", function () {
     // get number of columns from addon settings
     $.get(
       "/index.php?rex-api-call=slice_columns_helper",
-      { function: "get_number_columns" },
+      { function: "get_config" },
       function (result) {
         result = JSON.parse(result);
-        console.log(result.number_columns);
+        console.log(result);
+
         number_columns = result.number_columns;
+        min_width_column = result.min_width_column;
       }
     );
 
@@ -27,7 +30,7 @@ $(document).on("rex:ready", function () {
       handle: ".panel-heading",
       dataIdAttr: "data-slice-id",
       animation: 150,
-      ghostClass: 'slice_columns_ghost_class',
+      ghostClass: "slice_columns_ghost_class",
       onChange: function (evt) {
         // console.log("old: " + evt.oldDraggableIndex);
         // console.log("new: " + evt.newDraggableIndex);
@@ -36,12 +39,16 @@ $(document).on("rex:ready", function () {
         // console.log("Widths:");
         // console.log(store);
 
-        let h = document.getElementsByClassName("dragdrop")[0]
-        var article_id = h.getAttribute("data-article-id")
+        let h = document.getElementsByClassName("dragdrop")[0];
+        var article_id = h.getAttribute("data-article-id");
 
         $.post(
           "/index.php?rex-api-call=sorter",
-          { function: "updateorder", order: JSON.stringify(list.toArray()), article: article_id },
+          {
+            function: "updateorder",
+            order: JSON.stringify(list.toArray()),
+            article: article_id,
+          },
           function (result) {
             console.log(result);
           }
@@ -76,30 +83,33 @@ $(document).on("rex:ready", function () {
     let parent = target.closest(".dragdrop");
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
-    width = 100 * ((attr_width - 1) / number_columns) + "%";
 
-    parent.style.width = width;
-    slice_id = parent.getAttribute("data-slice-id");
-    article_id = parent.getAttribute("data-article-id");
+    if (!(attr_width - 1 < min_width_column)) {
+      width = 100 * ((attr_width - 1) / number_columns) + "%";
 
-    // update data-width attribute
-    parent.setAttribute(
-      "data-width",
-      parseInt(parent.getAttribute("data-width")) - 1
-    );
+      parent.style.width = width;
+      slice_id = parent.getAttribute("data-slice-id");
+      article_id = parent.getAttribute("data-article-id");
 
-    $.post(
-      "/index.php?rex-api-call=sorter",
-      {
-        function: "updatewidth",
-        slice: slice_id,
-        article: article_id,
-        width: parent.getAttribute("data-width"),
-      },
-      function (result) {
-        console.log(result);
-      }
-    );
+      // update data-width attribute
+      parent.setAttribute(
+        "data-width",
+        parseInt(parent.getAttribute("data-width")) - 1
+      );
+
+      $.post(
+        "/index.php?rex-api-call=sorter",
+        {
+          function: "updatewidth",
+          slice: slice_id,
+          article: article_id,
+          width: parent.getAttribute("data-width"),
+        },
+        function (result) {
+          console.log(result);
+        }
+      );
+    }
   }
 
   function wider(el) {
@@ -108,29 +118,32 @@ $(document).on("rex:ready", function () {
     let parent = target.closest(".dragdrop");
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
-    width = 100 * ((attr_width + 1) / number_columns) + "%";
 
-    parent.style.width = width;
-    slice_id = parent.getAttribute("data-slice-id");
-    article_id = parent.getAttribute("data-article-id");
+    if (!(attr_width + 1 > number_columns)) {
+      width = 100 * ((attr_width + 1) / number_columns) + "%";
 
-    // update data-width attribute
-    parent.setAttribute(
-      "data-width",
-      parseInt(parent.getAttribute("data-width")) + 1
-    );
+      parent.style.width = width;
+      slice_id = parent.getAttribute("data-slice-id");
+      article_id = parent.getAttribute("data-article-id");
 
-    $.post(
-      "/index.php?rex-api-call=sorter",
-      {
-        function: "updatewidth",
-        slice: slice_id,
-        article: article_id,
-        width: parent.getAttribute("data-width"),
-      },
-      function (result) {
-        console.log(result);
-      }
-    );
+      // update data-width attribute
+      parent.setAttribute(
+        "data-width",
+        parseInt(parent.getAttribute("data-width")) + 1
+      );
+
+      $.post(
+        "/index.php?rex-api-call=sorter",
+        {
+          function: "updatewidth",
+          slice: slice_id,
+          article: article_id,
+          width: parent.getAttribute("data-width"),
+        },
+        function (result) {
+          console.log(result);
+        }
+      );
+    }
   }
 });
