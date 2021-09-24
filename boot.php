@@ -5,8 +5,12 @@
 
 if (rex::isBackend()) {
     $addon = rex_addon::get('slice_columns');
-
-    rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
+	
+	rex_view::setJsProperty('slicesteps', (int)$addon->getConfig('number_steps'));
+    rex_view::setJsProperty('min_width_column', (int)$addon->getConfig('min_width_column'));
+    rex_view::setJsProperty('number_columns', (int)$addon->getConfig('number_columns'));
+    
+	rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
 
     rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
     rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
