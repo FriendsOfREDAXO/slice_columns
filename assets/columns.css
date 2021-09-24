@@ -1,0 +1,65 @@
+.rex-slices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.rex-slice,
+.dragdrop {
+  width: 100%;
+  padding: 5px;
+  margin: 0;
+}
+
+.dragdrop > ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* .rex-slice .panel-heading::before {
+  display: block;
+  content: '\f047';
+  float: left;
+  padding-right: 20px;
+  margin-top: 2px;
+  font-family: "FontAwesome";
+  cursor: grab;
+} */
+
+.rex-slice .panel-heading {
+  cursor: grab;
+}
+
+
+/* .rex-slice .panel-heading {
+  cursor: grab;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAABECAYAAACxiwTbAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAJFJREFUeNrskj0OgCAMhVtinIhXcPL+93HSKyiTg1giRgL1Z3DzveSFUF6BJh8TUS1uxVbsxKN48d5TEDOTlgnVTtzQqVncZ41FxsRbUuV7rWZNfDqVUxqLjIkzTeI1roPS+CazK8x4zKmJ7w7vZOhrPX21ugIgywEAAAAAAAAAAAAAAAAAAAAAAADADwDYBBgASa0vocoUKsUAAAAASUVORK5CYII=");
+  background-position: 2px center;
+  background-repeat: no-repeat;
+  background-size: 7px;
+} */
+
+.slice_columns_ghost_class {
+  background-color: lightblue;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.slice_columns_no_padding {
+  padding: 0 !important;
+}
+
+
+.rex-slice.rex-slice-output .panel-heading.rex-has-panel-options {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.rex-slice.rex-slice-output .panel-heading.rex-has-panel-options .panel-title{
+  /* margin-bottom: 10px; */
+}
+
+.rex-slice.rex-slice-output .panel-heading.rex-has-panel-options .rex-panel-options{
+  margin-left: auto;
+  text-align: right;
+}
+
