@@ -9,7 +9,7 @@ $(document).on("rex:ready", function () {
 
     console.log("initialising columns...");
 
-    // get number of columns from addon settings
+	  // get number of columns from addon settings
     $.get(
       "/index.php?rex-api-call=slice_columns_helper",
       { function: "get_config" },
@@ -20,7 +20,12 @@ $(document).on("rex:ready", function () {
         number_columns = result.number_columns;
         min_width_column = result.min_width_column;
       }
-    );
+    );  
+	  
+	  
+	// number_columns = rex.number_columns;
+    // min_width_column = rex.min_width_column;
+
 
     var element = document.getElementsByClassName("rex-slices")[0];
     // var element = document.getElementsByClassName("dragdrop")[0];
@@ -84,8 +89,8 @@ $(document).on("rex:ready", function () {
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
 
-    if (!(attr_width - 1 < min_width_column)) {
-      width = 100 * ((attr_width - 1) / number_columns) + "%";
+    if (!(attr_width - rex.slicesteps < min_width_column)) {
+      width = 100 * ((attr_width - rex.slicesteps) / number_columns) + "%";
 
       parent.style.width = width;
       slice_id = parent.getAttribute("data-slice-id");
@@ -94,7 +99,7 @@ $(document).on("rex:ready", function () {
       // update data-width attribute
       parent.setAttribute(
         "data-width",
-        parseInt(parent.getAttribute("data-width")) - 1
+        parseInt(parent.getAttribute("data-width")) - rex.slicesteps
       );
 
       $.post(
@@ -119,8 +124,8 @@ $(document).on("rex:ready", function () {
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
 
-    if (!(attr_width + 1 > number_columns)) {
-      width = 100 * ((attr_width + 1) / number_columns) + "%";
+    if (!(attr_width + rex.slicesteps > number_columns)) {
+      width = 100 * ((attr_width + rex.slicesteps) / number_columns) + "%";
 
       parent.style.width = width;
       slice_id = parent.getAttribute("data-slice-id");
@@ -129,7 +134,7 @@ $(document).on("rex:ready", function () {
       // update data-width attribute
       parent.setAttribute(
         "data-width",
-        parseInt(parent.getAttribute("data-width")) + 1
+        parseInt(parent.getAttribute("data-width")) + rex.slicesteps
       );
 
       $.post(

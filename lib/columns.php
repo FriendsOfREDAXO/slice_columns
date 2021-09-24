@@ -15,9 +15,11 @@ class Columns
 
     public static function addButtons(rex_extension_point $ep)
     {
-
-      // Test Module ausschließen
-    #  if ($ep->getModuleId() == '1') {return;}
+    $addon = rex_addon::get('slice_columns');
+    $modules = [];
+    $modules = explode("|", $addon->getConfig('modules'));
+    if (in_array($ep->getModuleId(), $modules)) {
+	return;}
 		
 		
         $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
@@ -81,7 +83,7 @@ class Columns
                 // dump($subject);
 
                 $addon = rex_addon::get('slice_columns');
-                $number_columns = $addon->getConfig('slice_columns_number_columns');
+                $number_columns = $addon->getConfig('number_columns');
 
                 $sql = rex_sql::factory();
                 $res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $ep->getParam('slice_id')]);
@@ -140,7 +142,7 @@ class Columns
 
         if ($size == '') {
 			$addon = rex_addon::get('slice_columns');
-            $size = $addon->getConfig('slice_columns_number_columns');
+            $size = $addon->getConfig('number_columns');
         }
 
         // dump($size);
@@ -180,4 +182,3 @@ class Columns
         return $width;
     }
 }
-
