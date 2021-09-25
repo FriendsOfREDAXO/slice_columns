@@ -9,7 +9,7 @@ https://github.com/FriendsOfREDAXO/bloecks/tree/previous_alpha/plugins/columns
 
 Lead: Andreas Lenhardt https://github.com/andileni
 
-## CSS Mapping für UiKit mit erweiterten Styles
+## CSS Mapping für UiKit3.x mit erweiterten Styles
 
 Ein geeignetes CSS liegt im Assets-Ordner des AddOns uikit_columns.css
 
