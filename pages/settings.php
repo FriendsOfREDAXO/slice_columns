@@ -7,14 +7,14 @@ $form = rex_config_form::factory($addon->name);
 $field = $form->addSelectField('modules', null, ['class' => 'form-control']);
 $field->setAttribute('multiple', 'multiple');
 $field->setAttribute('class', 'form-control');
-$field->setLabel($addon->i18n('slice_columns_modules'));
+$field->setLabel($addon->i18n('modules'));
 $select = $field->getSelect();
 $select->setSize(5);
 $mSql = rex_sql::factory();
         foreach ($mSql->getArray('SELECT id, name FROM ' . rex::getTablePrefix() . 'module ORDER BY name') as $m) {
             $select->addOption(rex_i18n::translate((string) $m['name']), (int) $m['id']);
 }
-#$field = $form->addRawField('<dl class="rex-form-group form-group"><dt></dt><dd><p>'.$addon->i18n('config_multiselect_note').'</p></dd></dl>');
+$field->setNotice($addon->i18n('modules_notice'));
 
 $field = $form->addTextField('number_columns');
 $field->setLabel('Anzahl Spalten');
