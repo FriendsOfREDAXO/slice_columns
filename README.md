@@ -1,9 +1,8 @@
 # REDAXO-AddOn: slice_columns
-🐣Slice_columns 
+🐣 Das Addon erlaubt die Anordnung der Slices in Spalten und das Verschieben von Blöcken per Drag & Drop. 
 
 ![Screenshot](https://github.com/FriendsOfREDAXO/slice_columns/blob/assets/screenshot.png)
-
-Das Addon erlaubt die Anordnung der Slices in Spalten und das Verschieben von Blöcken per Drag & Drop. 
+Screenshot mit AddOn Backend Tools 
 
 Ursprüngliche Idee von: Thomas Göllner](https://github.com/tgoellner). 
 
