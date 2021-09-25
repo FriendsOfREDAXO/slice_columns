@@ -1,7 +1,7 @@
 package: slice_columns
 version: dev-0.1.0
-author: Andreas Lenhardt
-supportpage: https://github.com/AndiLeni/statistics
+author: Friends Of REDAXO
+supportpage: https://github.com/FriendsOfREDAXO/slice_columns
 
 
 requires:
