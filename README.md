@@ -7,7 +7,7 @@ Screenshot mit AddOn Backend Tools
 ## Features
 
 - Blöcke vergrößern / verkleinern
-- Mapping der Breiten zu eignen CSS oder passend zu CSS-Frameworks
+- Mapping der Breiten zu eigenen CSS oder passend zu CSS-Frameworks
 - Ausschluss von Modulen 
 - Ausschluss von Templates 
 - Drag & Drop für Blöcke
