@@ -137,7 +137,7 @@ $(document).on("rex:ready", function () {
 	if (event.shiftKey) {
 		 parent.setAttribute(
         "data-width",
-        12
+        number_columns
       );
 	}
 		else {
