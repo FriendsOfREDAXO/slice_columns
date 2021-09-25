@@ -17,33 +17,33 @@ $mSql = rex_sql::factory();
 $field->setNotice($addon->i18n('modules_notice'));
 
 $field = $form->addTextField('number_columns');
-$field->setLabel('Anzahl Spalten');
+$field->setLabel($addon->i18n('number_columns'));
 $field->setAttribute('type', 'number');
 $field->setAttribute('required', 'required');
-$field->setNotice('Wie viele Spalten unterstützt das Frontend Framework?');
-$field->getValidator()->add('type', 'Muss eine Zahl sein', 'int');
+$field->setNotice($addon->i18n('number_columns'));
+$field->getValidator()->add('type', $addon->i18n('val_numbers'), 'int');
 
 $field = $form->addTextField('number_steps');
-$field->setLabel('Schritte pro Click');
+$field->setLabel($addon->i18n('number_steps'));
 $field->setAttribute('type', 'number');
 $field->setAttribute('required', 'required');
-$field->setNotice('Hier definiert man die Spaltenanzahl die je Click erweitert werden soll');
-$field->getValidator()->add('type', 'Muss eine Zahl sein', 'int');
+$field->setNotice($addon->i18n('number_steps'));
+$field->getValidator()->add('type', $addon->i18n('val_numbers'), 'int');
 
 
 
 $field = $form->addTextField('min_width_column');
-$field->setLabel('Spalten-Minimum');
+$field->setLabel($addon->i18n('min_width'));
 $field->setAttribute('type', 'number');
 $field->setAttribute('required', 'required');
-$field->setNotice('Kleiner als dieser Wert darf eine Spalte nicht werden.');
-$field->getValidator()->add('type', 'Muss eine Zahl sein', 'int');
+$field->setNotice($addon->i18n('min_width_notice'));
+$field->getValidator()->add('type', $addon->i18n('val_numbers'), 'int');
 
 
 $field = $form->addTextAreaField('definitions');
 $field->setAttribute('class', 'codemirror form-control');
 $field->setAttribute('data-codemirror-mode', 'json');
-$field->setLabel('Mappings für Breiten zu CSS-Klassen');
+$field->setLabel($addon->i18n('definitions'));
 $field->setNotice('');
 
 $fragment = new rex_fragment();
