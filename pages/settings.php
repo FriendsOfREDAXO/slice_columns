@@ -20,14 +20,14 @@ $field = $form->addTextField('number_columns');
 $field->setLabel($addon->i18n('number_columns'));
 $field->setAttribute('type', 'number');
 $field->setAttribute('required', 'required');
-$field->setNotice($addon->i18n('number_columns'));
+$field->setNotice($addon->i18n('number_columns_notice'));
 $field->getValidator()->add('type', $addon->i18n('val_numbers'), 'int');
 
 $field = $form->addTextField('number_steps');
 $field->setLabel($addon->i18n('number_steps'));
 $field->setAttribute('type', 'number');
 $field->setAttribute('required', 'required');
-$field->setNotice($addon->i18n('number_steps'));
+$field->setNotice($addon->i18n('number_steps_notice'));
 $field->getValidator()->add('type', $addon->i18n('val_numbers'), 'int');
 
 
