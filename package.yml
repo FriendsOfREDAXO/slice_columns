@@ -20,11 +20,6 @@ page:
       title: 'translate:slic_columns_einstellungen'
       icon: rex-icon fa-cog
       perm: admin[] 
-    help:
-      title: 'translate:clice_columns_help'
-      perm: admin[]
-      subPath: README.md
-      itemclass: pull-right
   
 default_config:
   number_columns: 12
