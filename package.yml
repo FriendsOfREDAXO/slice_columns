@@ -16,7 +16,7 @@ page:
   icon: rex-icon fa-columns
   subpages:
     settings:  
-      title: Einstellungen
+      title: 'translate:slice_columns_settings'
       icon: rex-icon fa-cog
   
 default_config:
