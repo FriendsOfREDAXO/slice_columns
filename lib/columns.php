@@ -183,7 +183,10 @@ class Columns
         if (($p = strpos($subject, $find)) !== false) {
             $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
         } else {
-            $subject =  "\n" .
+            
+			if (!rex_request('rex_history_date'))
+			{
+			$subject =  "\n" .
                 "echo '<div class=\"" . $definitions[$size] . "\">'; // bloecks_columns" .
                 "\n\n" .
                 $subject .
@@ -191,6 +194,9 @@ class Columns
                 "echo '</div>'; // bloecks_columns wrapper" .
                 "\n";
         }
+			else { $subject = '<div class="'.$definitions[$size].'">'.$subject.'</div>'; }
+		}
+			
         // dump($subject);
         return $subject;
     }
@@ -198,12 +204,18 @@ class Columns
     private static function getSize($sliceID)
     {
         $sql = rex_sql::factory();
-        $res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $sliceID]);
-
+		if (rex_request('rex_history_date'))
+		{
+        $res = $sql->setQuery('select slice_size from rex_article_slice_history where id = :id', ['id' => $sliceID]);
+		}
+		else {
+			$res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $sliceID]);
+		}
         $width = $res->getValue('slice_size');
 
         return $width;
     }
 }
+
 
 
