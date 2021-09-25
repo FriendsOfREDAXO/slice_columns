@@ -24,16 +24,6 @@ class Columns
             return;
         }
 
-        /*	
-	// templates ausschließen	
-   	$artId = $ep->getArticleId();
-	$rexArticle = rex_article::get($artId);
-	$templates = [];
-	$templates = explode("|", $addon->getConfig('templates'));	
-	if (in_array($rexArticle->getTemplateId(), $templates)) {
-	return;}	
-	*/
-
         $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
         $compress = rex_addon::get('slice_columns')->getAssetsUrl('outline_compress_black_24dp.png');
 
