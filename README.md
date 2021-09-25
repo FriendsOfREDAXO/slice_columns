@@ -4,11 +4,13 @@
 ![Screenshot](https://github.com/FriendsOfREDAXO/slice_columns/blob/assets/screenshot.png)
 Screenshot mit AddOn Backend Tools 
 
-Ursprüngliche Idee von: Thomas Göllner](https://github.com/tgoellner). 
+## Features
 
-https://github.com/FriendsOfREDAXO/bloecks/tree/previous_alpha/plugins/columns
-
-Lead: Andreas Lenhardt https://github.com/andileni
+- Blöcke vergrößern / verkleinern
+- Mapping der Breiten zu eignen CSS oder passend zu CSS-Frameworks
+- Ausschluss von Modulen 
+- Ausschluss von Templates 
+- Drag & Drop für Blöcke
 
 ## CSS Mapping für UiKit3.x mit erweiterten Styles
 
@@ -32,3 +34,10 @@ Ein geeignetes CSS liegt im Assets-Ordner des AddOns uikit_columns.css
    "12":"uk-width-1-1"
 }
 ```
+
+## Credits
+Ursprüngliche Idee von: Thomas Göllner](https://github.com/tgoellner). 
+
+https://github.com/FriendsOfREDAXO/bloecks/tree/previous_alpha/plugins/columns
+
+**Lead:** Andreas Lenhardt https://github.com/andileni
