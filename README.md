@@ -11,6 +11,8 @@ Lead: Andreas Lenhardt https://github.com/andileni
 
 ## CSS Mapping für UiKit3.x mit erweiterten Styles
 
+Hier bei 12 Spalten
+
 Ein geeignetes CSS liegt im Assets-Ordner des AddOns uikit_columns.css
 
 ```json
