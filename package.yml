@@ -14,12 +14,10 @@ page:
   title: Slice-Columns
   perm: meinaddon[]
   icon: rex-icon fa-columns
-  perm: admin[] 
   subpages:
     settings:  
-      title: 'translate:slic_columns_einstellungen'
+      title: Einstellungen
       icon: rex-icon fa-cog
-      perm: admin[] 
   
 default_config:
   number_columns: 12
