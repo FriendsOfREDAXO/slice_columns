@@ -1,7 +1,7 @@
 # slice_columns
 🐣Slice_columns 
 
-Das Addon erlaubt die Anordnung der Slices in Spalten.
+Das Addon erlaubt die Anordnung der Slices in Spalten und das Verschieben von Blöcken per Drag & Drop. 
 
 Ursprüngliche Idee von: Thomas Göllner](https://github.com/tgoellner). 
 
