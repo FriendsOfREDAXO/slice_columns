@@ -44,7 +44,7 @@ $field = $form->addTextAreaField('definitions');
 $field->setAttribute('class', 'codemirror form-control');
 $field->setAttribute('data-codemirror-mode', 'json');
 $field->setLabel($addon->i18n('definitions'));
-$field->setNotice('');
+$field->setNotice($addon->i18n('definitions_notice'));
 
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
