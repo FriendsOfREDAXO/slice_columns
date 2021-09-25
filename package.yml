@@ -42,7 +42,9 @@ default_config:
     "12": "col-sm-12"
     }
     '
-
+conflicts:
+    packages:
+        bloecks/dragndrop: '>=1.0.0'
 
 installer_ignore:
     - .git
