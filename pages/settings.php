@@ -4,18 +4,6 @@ $addon = rex_addon::get('slice_columns');
 
 $form = rex_config_form::factory($addon->name);
 
-$field = $form->addSelectField('modules', null, ['class' => 'form-control']);
-$field->setAttribute('multiple', 'multiple');
-$field->setAttribute('class', 'form-control');
-$field->setLabel($addon->i18n('modules'));
-$select = $field->getSelect();
-$select->setSize(5);
-$mSql = rex_sql::factory();
-        foreach ($mSql->getArray('SELECT id, name FROM ' . rex::getTablePrefix() . 'module ORDER BY name') as $m) {
-            $select->addOption(rex_i18n::translate((string) $m['name']), (int) $m['id']);
-}
-$field->setNotice($addon->i18n('modules_notice'));
-
 $field = $form->addTextField('number_columns');
 $field->setLabel($addon->i18n('number_columns'));
 $field->setAttribute('type', 'number');
@@ -45,6 +33,20 @@ $field->setAttribute('class', 'codemirror form-control');
 $field->setAttribute('data-codemirror-mode', 'json');
 $field->setLabel($addon->i18n('definitions'));
 $field->setNotice($addon->i18n('definitions_notice'));
+
+
+$field = $form->addSelectField('modules', null, ['class' => 'form-control']);
+$field->setAttribute('multiple', 'multiple');
+$field->setAttribute('class', 'form-control');
+$field->setLabel($addon->i18n('modules'));
+$select = $field->getSelect();
+$select->setSize(5);
+$mSql = rex_sql::factory();
+        foreach ($mSql->getArray('SELECT id, name FROM ' . rex::getTablePrefix() . 'module ORDER BY name') as $m) {
+            $select->addOption(rex_i18n::translate((string) $m['name']), (int) $m['id']);
+}
+$field->setNotice($addon->i18n('modules_notice'));
+
 
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
