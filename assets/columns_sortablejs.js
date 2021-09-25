@@ -127,15 +127,25 @@ $(document).on("rex:ready", function () {
     if (!(attr_width + rex.slicesteps > number_columns)) {
       width = 100 * ((attr_width + rex.slicesteps) / number_columns) + "%";
 
+	if (event.shiftKey) {
+	width = 100 + "%";
+	}	
       parent.style.width = width;
       slice_id = parent.getAttribute("data-slice-id");
       article_id = parent.getAttribute("data-article-id");
 
+	if (event.shiftKey) {
+		 parent.setAttribute(
+        "data-width",
+        12
+      );
+	}
+		else {
       // update data-width attribute
       parent.setAttribute(
         "data-width",
         parseInt(parent.getAttribute("data-width")) + rex.slicesteps
-      );
+      );}
 
       $.post(
         "/index.php?rex-api-call=sorter",
@@ -152,3 +162,4 @@ $(document).on("rex:ready", function () {
     }
   }
 });
+
