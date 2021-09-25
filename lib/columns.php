@@ -8,22 +8,23 @@ class Columns
     {
         $items = (array) $ep->getSubject();
         $items[] = $btn;
-        dump($items);
+        // dump($items);
         $ep->setSubject($items);
     }
 
 
     public static function addButtons(rex_extension_point $ep)
     {
-	$addon = rex_addon::get('slice_columns');
-    
-	// Module ausschließen	
-	$modules = [];
-    $modules = explode("|", $addon->getConfig('modules'));
-    if (in_array($ep->getModuleId(), $modules)) {
-	return;}
-	
-	/*	
+        $addon = rex_addon::get('slice_columns');
+
+        // Module ausschließen	
+        $modules = [];
+        $modules = explode("|", $addon->getConfig('modules'));
+        if (in_array($ep->getModuleId(), $modules)) {
+            return;
+        }
+
+        /*	
 	// templates ausschließen	
    	$artId = $ep->getArticleId();
 	$rexArticle = rex_article::get($artId);
@@ -32,7 +33,7 @@ class Columns
 	if (in_array($rexArticle->getTemplateId(), $templates)) {
 	return;}	
 	*/
-		
+
         $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
         $compress = rex_addon::get('slice_columns')->getAssetsUrl('outline_compress_black_24dp.png');
 
@@ -152,7 +153,7 @@ class Columns
         $size = static::getSize($ep->getParam('slice_id'));
 
         if ($size == '') {
-			$addon = rex_addon::get('slice_columns');
+            $addon = rex_addon::get('slice_columns');
             $size = $addon->getConfig('number_columns');
         }
 
@@ -193,5 +194,3 @@ class Columns
         return $width;
     }
 }
-
-
