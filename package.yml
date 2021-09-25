@@ -18,7 +18,11 @@ page:
     settings:  
       title: 'translate:slice_columns_settings'
       icon: rex-icon fa-cog
-  
+    help:  
+      title: 'translate:help'
+      icon: rex-icon fa-help
+      subPath: README.md
+
 default_config:
   number_columns: 12
   number_steps: 1
