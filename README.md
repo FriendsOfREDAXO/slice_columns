@@ -11,6 +11,7 @@ Screenshot mit AddOn Backend Tools
 - Ausschluss von Modulen 
 - Ausschluss von Templates 
 - Drag & Drop für Blöcke
+- Shift+Breiter = 100% 
 
 ## CSS Mapping für UiKit3.x mit erweiterten Styles
 
