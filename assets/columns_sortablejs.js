@@ -9,22 +9,11 @@ $(document).on("rex:ready", function () {
 
     console.log("initialising columns...");
 
-	  // get number of columns from addon settings
-    $.get(
-      "/index.php?rex-api-call=slice_columns_helper",
-      { function: "get_config" },
-      function (result) {
-        result = JSON.parse(result);
-        console.log(result);
-
-        number_columns = result.number_columns;
-        min_width_column = result.min_width_column;
-      }
-    );  
+ 
 	  
 	  
-	// number_columns = rex.number_columns;
-    // min_width_column = rex.min_width_column;
+	 number_columns = rex.number_columns;
+   min_width_column = rex.min_width_column;
 
 
     var element = document.getElementsByClassName("rex-slices")[0];
