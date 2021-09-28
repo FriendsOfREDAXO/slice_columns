@@ -4,6 +4,10 @@ $addon = rex_addon::get('slice_columns');
 
 $form = rex_config_form::factory($addon->name);
 
+$field = $form->addCheckboxField('sidebar_switch');
+$field->setLabel($addon->i18n('sidebar_switch'));
+$field->addOption($addon->i18n('yes'), '1');
+
 $field = $form->addTextField('number_columns');
 $field->setLabel($addon->i18n('number_columns'));
 $field->setAttribute('type', 'number');
@@ -69,4 +73,5 @@ $fragment->setVar('title', "Einstellungen", false);
 $fragment->setVar('body', $form->get(), false);
 
 echo $fragment->parse('core/page/section.php');
+
 
