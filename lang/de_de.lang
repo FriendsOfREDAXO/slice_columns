@@ -12,4 +12,6 @@ slice_columns_number_steps_notice = Hier definiert man die Spaltenanzahl die je 
 slice_columns_min_width = Mindestgröße der Blöcke
 slice_columns_min_width_notice = Kleiner als dieser Wert darf eine Spalte nicht werden.
 slice_columns_definitions = Mapping der CSS Classes
-slice_columns_definitions_notice = Hier kann man die Spaltenzahl den CSS-Classes z.B. eines Frameworks zuordnen. Mehr Infos in der Hilfe. 
+slice_columns_definitions_notice = Hier kann man die Spaltenzahl den CSS-Classes z.B. eines Frameworks zuordnen. Mehr Infos in der Hilfe.
+slice_columns_sidebar_switch = Sidebar unter den Blöcken
+slice_columns_syes  = ja
