@@ -9,12 +9,8 @@ $(document).on("rex:ready", function () {
 
     console.log("initialising columns...");
 
- 
-	  
-	  
-	 number_columns = rex.number_columns;
-   min_width_column = rex.min_width_column;
-
+    number_columns = rex.number_columns;
+    min_width_column = rex.min_width_column;
 
     var element = document.getElementsByClassName("rex-slices")[0];
     // var element = document.getElementsByClassName("dragdrop")[0];
@@ -35,6 +31,7 @@ $(document).on("rex:ready", function () {
 
         let h = document.getElementsByClassName("dragdrop")[0];
         var article_id = h.getAttribute("data-article-id");
+        var clang_id = h.getAttribute("data-clang-id");
 
         $.post(
           "/index.php?rex-api-call=sorter",
@@ -42,6 +39,7 @@ $(document).on("rex:ready", function () {
             function: "updateorder",
             order: JSON.stringify(list.toArray()),
             article: article_id,
+            clang: clang_id,
           },
           function (result) {
             console.log(result);
@@ -84,6 +82,7 @@ $(document).on("rex:ready", function () {
       parent.style.width = width;
       slice_id = parent.getAttribute("data-slice-id");
       article_id = parent.getAttribute("data-article-id");
+      var clang_id = parent.getAttribute("data-clang-id");
 
       // update data-width attribute
       parent.setAttribute(
@@ -97,6 +96,7 @@ $(document).on("rex:ready", function () {
           function: "updatewidth",
           slice: slice_id,
           article: article_id,
+          clang: clang_id,
           width: parent.getAttribute("data-width"),
         },
         function (result) {
@@ -116,25 +116,23 @@ $(document).on("rex:ready", function () {
     if (!(attr_width + rex.slicesteps > number_columns)) {
       width = 100 * ((attr_width + rex.slicesteps) / number_columns) + "%";
 
-	if (event.shiftKey) {
-	width = 100 + "%";
-	}	
+      if (event.shiftKey) {
+        width = 100 + "%";
+      }
       parent.style.width = width;
       slice_id = parent.getAttribute("data-slice-id");
       article_id = parent.getAttribute("data-article-id");
+      var clang_id = parent.getAttribute("data-clang-id");
 
-	if (event.shiftKey) {
-		 parent.setAttribute(
-        "data-width",
-        number_columns
-      );
-	}
-		else {
-      // update data-width attribute
-      parent.setAttribute(
-        "data-width",
-        parseInt(parent.getAttribute("data-width")) + rex.slicesteps
-      );}
+      if (event.shiftKey) {
+        parent.setAttribute("data-width", number_columns);
+      } else {
+        // update data-width attribute
+        parent.setAttribute(
+          "data-width",
+          parseInt(parent.getAttribute("data-width")) + rex.slicesteps
+        );
+      }
 
       $.post(
         "/index.php?rex-api-call=sorter",
@@ -142,6 +140,7 @@ $(document).on("rex:ready", function () {
           function: "updatewidth",
           slice: slice_id,
           article: article_id,
+          clang: clang_id,
           width: parent.getAttribute("data-width"),
         },
         function (result) {
@@ -151,4 +150,3 @@ $(document).on("rex:ready", function () {
     }
   }
 });
-

@@ -15,15 +15,16 @@ class Columns
 
     public static function addButtons(rex_extension_point $ep)
     {
-	$addon = rex_addon::get('slice_columns');
-    
-	// Module ausschließen	
-	$modules = [];
-    $modules = explode("|", $addon->getConfig('modules'));
-    if (in_array($ep->getModuleId(), $modules)) {
-	return;}
-	
-	/*	
+        $addon = rex_addon::get('slice_columns');
+
+        // Module ausschließen	
+        $modules = [];
+        $modules = explode("|", $addon->getConfig('modules'));
+        if (in_array($ep->getModuleId(), $modules)) {
+            return;
+        }
+
+        /*	
 	// templates ausschließen	
    	$artId = $ep->getArticleId();
 	$rexArticle = rex_article::get($artId);
@@ -32,7 +33,7 @@ class Columns
 	if (in_array($rexArticle->getTemplateId(), $templates)) {
 	return;}	
 	*/
-		
+
         $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
         $compress = rex_addon::get('slice_columns')->getAssetsUrl('outline_compress_black_24dp.png');
 
@@ -117,7 +118,7 @@ class Columns
 
                 // sortablejs
                 // $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $handler . '<ul>' . $subject . '</ul></li>';
-                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
+                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
 
 
                 // gridstack
@@ -146,25 +147,25 @@ class Columns
 
     public static function frontend($ep)
     {
-		$subject = $ep->getSubject();
-		$addon = rex_addon::get('slice_columns');
-		// Module ausschließen	
+        $subject = $ep->getSubject();
+        $addon = rex_addon::get('slice_columns');
+        // Module ausschließen	
         $modules = [];
         $modules = explode("|", $addon->getConfig('modules'));
-		#dump($ep);
-        
-		if (in_array($ep->getParam('module_id'), $modules)) {
+        #dump($ep);
+
+        if (in_array($ep->getParam('module_id'), $modules)) {
             return $subject;
         }
-		
-		
-        
+
+
+
         $find = '{{bloecks_columns_css}}';
 
         $size = static::getSize($ep->getParam('slice_id'));
 
         if ($size == '') {
-			$addon = rex_addon::get('slice_columns');
+            $addon = rex_addon::get('slice_columns');
             $size = $addon->getConfig('number_columns');
         }
 
@@ -183,20 +184,20 @@ class Columns
         if (($p = strpos($subject, $find)) !== false) {
             $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
         } else {
-            
-			if (!rex_request('rex_history_date'))
-			{
-			$subject =  "\n" .
-                "echo '<div class=\"" . $definitions[$size] . "\">'; // bloecks_columns" .
-                "\n\n" .
-                $subject .
-                "\n" .
-                "echo '</div>'; // bloecks_columns wrapper" .
-                "\n";
+
+            if (!rex_request('rex_history_date')) {
+                $subject =  "\n" .
+                    "echo '<div class=\"" . $definitions[$size] . "\">'; // bloecks_columns" .
+                    "\n\n" .
+                    $subject .
+                    "\n" .
+                    "echo '</div>'; // bloecks_columns wrapper" .
+                    "\n";
+            } else {
+                $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
+            }
         }
-			else { $subject = '<div class="'.$definitions[$size].'">'.$subject.'</div>'; }
-		}
-			
+
         // dump($subject);
         return $subject;
     }
@@ -204,18 +205,13 @@ class Columns
     private static function getSize($sliceID)
     {
         $sql = rex_sql::factory();
-		if (rex_request('rex_history_date'))
-		{
-        $res = $sql->setQuery('select slice_size from rex_article_slice_history where id = :id', ['id' => $sliceID]);
-		}
-		else {
-			$res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $sliceID]);
-		}
+        if (rex_request('rex_history_date')) {
+            $res = $sql->setQuery('select slice_size from rex_article_slice_history where id = :id', ['id' => $sliceID]);
+        } else {
+            $res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $sliceID]);
+        }
         $width = $res->getValue('slice_size');
 
         return $width;
     }
 }
-
-
-
