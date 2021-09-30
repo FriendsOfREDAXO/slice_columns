@@ -42,3 +42,5 @@ Ursprüngliche Idee von: Thomas Göllner](https://github.com/tgoellner).
 https://github.com/FriendsOfREDAXO/bloecks/tree/previous_alpha/plugins/columns
 
 **Lead:** Andreas Lenhardt https://github.com/andileni
+
+**Testing and further development:** Thomas Skerbis https://github.com/skerbis
