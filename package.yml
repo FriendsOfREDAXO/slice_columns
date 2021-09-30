@@ -12,7 +12,7 @@ requires:
 
 page:
   title: Slice-Columns
-  perm: meinaddon[]
+  perm: slice_columns[]
   icon: rex-icon fa-columns
   subpages:
     settings:  
