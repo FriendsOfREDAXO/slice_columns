@@ -3,7 +3,7 @@
 class rex_api_sorter extends rex_api_function
 {
 
-    protected $published = false;  // Aufruf aus dem Frontend erlaubt
+    protected $published = false;  // Aufruf nur aus dem Backend
 
     public function execute()
     {
