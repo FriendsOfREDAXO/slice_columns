@@ -20,7 +20,7 @@ class Columns
         // Module ausschließen	
         $modules = [];
         $modules = explode("|", $addon->getConfig('modules'));
-        if (in_array($ep->getModuleId(), $modules)) {
+        if (in_array($ep->getModuleId(), $modules) || !rex::getUser()->hasPerm('slice_columns[edit]')) {
             return;
         }
 
