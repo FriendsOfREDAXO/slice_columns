@@ -5,7 +5,7 @@ supportpage: https://github.com/FriendsOfREDAXO/slice_columns
 
 
 requires:
-  redaxo: '^5.11'
+  redaxo: '^5.12'
   packages:
   php:
     version: '>=7.1'
