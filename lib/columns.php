@@ -3,7 +3,6 @@
 class Columns
 {
 
-
     public static function addButtonm(rex_extension_point $ep, array $btn)
     {
         $items = (array) $ep->getSubject();
@@ -11,7 +10,6 @@ class Columns
         #dump($items);
         $ep->setSubject($items);
     }
-
 
     public static function addButtons(rex_extension_point $ep)
     {
@@ -23,16 +21,6 @@ class Columns
         if (in_array($ep->getModuleId(), $modules) || !rex::getUser()->hasPerm('slice_columns[edit]') || false === rex::getUser()->getComplexPerm('modules')->hasPerm($ep->getModuleId())) {
             return;
         }
-	
-        /*	
-	// templates ausschließen	
-   	$artId = $ep->getArticleId();
-	$rexArticle = rex_article::get($artId);
-	$templates = [];
-	$templates = explode("|", $addon->getConfig('templates'));	
-	if (in_array($rexArticle->getTemplateId(), $templates)) {
-	return;}	
-	*/
 
         $expand = rex_addon::get('slice_columns')->getAssetsUrl('outline_expand_black_24dp.png');
         $compress = rex_addon::get('slice_columns')->getAssetsUrl('outline_compress_black_24dp.png');
@@ -54,32 +42,6 @@ class Columns
                 ]
             ]
         ]);
-
-
-
-        // foreach (['copy', 'cut'] as $type) {
-        //     static::addButtonm($ep, [
-        //         'hidden_label' => 'HIDDEN LABEL',
-        //         // 'url' => rex_url::backendController([
-        //         //     'page' => 'content/edit',
-        //         //     'article_id' => $ep->getParam('article_id'),
-        //         //     'bloecks' => 'cutncopy',
-        //         //     'module_id' => $ep->getParam('module_id'),
-        //         //     'slice_id' => $ep->getParam('slice_id'),
-        //         //     'clang' => $ep->getParam('clang'),
-        //         //     'ctype' => $ep->getParam('ctype'),
-        //         //     'revision' => 1,
-        //         //     'cuc_action' => $type,
-        //         // ]),
-        //         'attributes' => [
-        //             'class' => ['btn-' . $type],
-        //             'title' => 'TITLE',
-        //             'data-bloecks-cutncopy-iscopied' => 0 && ('edit' === $type) ? 'true' : 'false',
-        //             'data-pjax-no-history' => 'true',
-        //         ],
-        //         'icon' => '',
-        //     ]);
-        // }
     }
 
     public static function show($ep)
@@ -90,9 +52,6 @@ class Columns
 
         if (rex::isBackend()) {
             if (!preg_match('/<form/', $subject)) {
-                // $subject = '<li class="rex-slice rex-slice-bloecks-item rex-slice-output"' . (!empty($attributes) ? ' ' . join(' ', $attributes) : '') . '><ul>' . $subject . '</ul></li>';
-                // dump($ep);
-                // dump($subject);
 
                 $addon = rex_addon::get('slice_columns');
                 $number_columns = $addon->getConfig('number_columns');
@@ -113,33 +72,10 @@ class Columns
                 $handler = '
                 <span class="fa fa-arrows slice_columns_handler">handle</span>
                 ';
-
-
-
                 // sortablejs
-                // $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $handler . '<ul>' . $subject . '</ul></li>';
                 $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
-
-
-                // gridstack
-                // $subject = '<li class="grid-stack-item" data-id="' . $ep->getParam('slice_id') . '"><ul><div class="grid-stack-item-content">' . $subject . '</div></ul></li>';
-
-                //     $subject .= '<div class="grid-stack">
-                //     <div class="grid-stack-item">
-                //       <div class="grid-stack-item-content">Item 1</div>
-                //     </div>
-                //     <div class="grid-stack-item" gs-w="2">
-                //       <div class="grid-stack-item-content">Item 2 wider</div>
-                //     </div>
-                //   </div>';
-
-
-                // dump($subject);
             }
         } else {
-
-            // $subject = 'HELLOOOO';
-            // echo 'HHHHHHHHHHHHHHHHHHHHH';
         }
 
         return $subject;
@@ -158,10 +94,6 @@ class Columns
             return $subject;
         }
 
-
-
-        $find = '{{bloecks_columns_css}}';
-
         $size = static::getSize($ep->getParam('slice_id'));
 
         if ($size == '') {
@@ -169,36 +101,22 @@ class Columns
             $size = $addon->getConfig('number_columns');
         }
 
-        // dump($size);
-        // $subject = $ep->getSubject();
-
-        // $subject = '<div class="col-sm-3"><hr><hr><hr>' . $subject . '</div>';
-
-        // return $subject;
-
         $addon = rex_addon::get('slice_columns');
         $definitions = $addon->getConfig('definitions');
         $definitions = json_decode($definitions, true);
 
-
-        if (($p = strpos($subject, $find)) !== false) {
-            $subject = substr($subject, 0, $p) . substr($subject, $p + strlen($find));
+        if (!rex_request('rex_history_date')) {
+            $subject =  "\n" .
+                "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
+                "\n\n" .
+                $subject .
+                "\n" .
+                "echo '</div>'; // bloecks_columns wrapper" .
+                "\n";
         } else {
-
-            if (!rex_request('rex_history_date')) {
-                $subject =  "\n" .
-                    "echo '<div class=\"" . $definitions[$size] . "\">'; // bloecks_columns" .
-                    "\n\n" .
-                    $subject .
-                    "\n" .
-                    "echo '</div>'; // bloecks_columns wrapper" .
-                    "\n";
-            } else {
-                $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
-            }
+            $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
         }
 
-        // dump($subject);
         return $subject;
     }
 
