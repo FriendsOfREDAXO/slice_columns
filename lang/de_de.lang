@@ -1,3 +1,5 @@
+perm_general_slice_columns[] = SliceColumns-Settings-Seite
+perm_general_slice_columns[edit] = Slice-Breiten ändern
 slice_columns_settings = Grid-Einstellungen
 slice_columns_help = Hilfe
 slice_columns_modules = Module ausschließen
