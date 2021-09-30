@@ -34,7 +34,7 @@ $(document).on("rex:ready", function () {
         var clang_id = h.getAttribute("data-clang-id");
 
         $.post(
-          "/index.php?rex-api-call=sorter",
+          "index.php?page=content/edit&rex-api-call=sorter",
           {
             function: "updateorder",
             order: JSON.stringify(list.toArray()),
@@ -91,7 +91,7 @@ $(document).on("rex:ready", function () {
       );
 
       $.post(
-        "/index.php?rex-api-call=sorter",
+        "index.php?rex-api-call=sorter",
         {
           function: "updatewidth",
           slice: slice_id,
@@ -135,7 +135,7 @@ $(document).on("rex:ready", function () {
       }
 
       $.post(
-        "/index.php?rex-api-call=sorter",
+        "index.php?page=content/edit&rex-api-call=sorter",
         {
           function: "updatewidth",
           slice: slice_id,
@@ -150,3 +150,4 @@ $(document).on("rex:ready", function () {
     }
   }
 });
+
