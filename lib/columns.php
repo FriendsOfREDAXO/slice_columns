@@ -20,10 +20,10 @@ class Columns
         // Module ausschließen	
         $modules = [];
         $modules = explode("|", $addon->getConfig('modules'));
-        if (in_array($ep->getModuleId(), $modules) || !rex::getUser()->hasPerm('slice_columns[edit]')) {
+        if (in_array($ep->getModuleId(), $modules) || !rex::getUser()->hasPerm('slice_columns[edit]') || false === rex::getUser()->getComplexPerm('modules')->hasPerm($ep->getModuleId())) {
             return;
         }
-
+	
         /*	
 	// templates ausschließen	
    	$artId = $ep->getArticleId();
