@@ -17,7 +17,7 @@ Screenshot mit AddOn Backend Tools
 
 Hier bei 12 Spalten
 
-Ein geeignetes CSS liegt im Assets-Ordner des AddOns uikit_columns.css
+Ein geeignetes SCSS liegt im Assets-Ordner des AddOns uikit_columns.css
 
 ```json
 {
