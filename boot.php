@@ -1,5 +1,5 @@
 <?php
-if (rex::isBackend()) {
+if (rex::isBackend() && rex::getUser()) {
     $addon = rex_addon::get('slice_columns');
 
     rex_view::setJsProperty('slicesteps', (int)$addon->getConfig('number_steps'));
