@@ -111,7 +111,7 @@ class Columns
                 "\n\n" .
                 $subject .
                 "\n" .
-                "echo '</div>'; // bloecks_columns wrapper" .
+                "echo '</div>'; // column wrapper" .
                 "\n";
         } else {
             $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
