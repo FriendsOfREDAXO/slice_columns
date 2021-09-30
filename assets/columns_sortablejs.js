@@ -91,7 +91,7 @@ $(document).on("rex:ready", function () {
       );
 
       $.post(
-        "index.php?rex-api-call=sorter",
+        "index.php?page=content/edit&rex-api-call=sorter",
         {
           function: "updatewidth",
           slice: slice_id,
