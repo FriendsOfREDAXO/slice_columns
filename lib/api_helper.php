@@ -3,7 +3,7 @@
 class rex_api_slice_columns_helper extends rex_api_function
 {
 
-    protected $published = true;
+    protected $published = false;
 
     public function execute()
     {
