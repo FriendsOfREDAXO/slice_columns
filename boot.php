@@ -1,5 +1,10 @@
 <?php
-if (rex::isBackend() && rex::getUser()) {
+
+rex_perm::register('slice_columns[edit]');
+    
+
+if (rex::isBackend() && rex::getUser() && rex::getUser()->hasPerm('slice_columns[edit]')) {   
+    
     $addon = rex_addon::get('slice_columns');
 
     rex_view::setJsProperty('slicesteps', (int)$addon->getConfig('number_steps'));
