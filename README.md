@@ -13,6 +13,15 @@ Screenshot mit AddOn Backend Tools
 - Drag & Drop für Blöcke
 - Shift+Breiter = 100% 
 
+## CSS Mapping 
+
+Die Spalten können mit dem eigenen CSS oder Framework gemappt werden. 
+Ein Beispiel dazu steht direkt nach Installation für Bootstrap bereit. 
+
+**Wichtig**
+Es sollten alle Spalten definieert sein die am Ende verwendet werden. 
+
+
 ## CSS Mapping für UiKit3.x mit erweiterten Styles
 
 Hier bei 12 Spalten
