@@ -27,18 +27,20 @@ class Columns
 
         $ep->addAdditionalActions([
             'smallerButton' => [
-                'label' => '<img height="22px" src="' . $compress . '">',
+                'label' => '',
+				'icon' => 'fa fa-lg fa-compress slice_columns_icon ',
                 'attributes' => [
-                    "class" => ['btn-default btn_smaller slice_columns_no_padding']
+                    "class" => ['btn btn-default btn_smaller']
                 ]
             ]
         ]);
 
         $ep->addAdditionalActions([
             'widerButton' => [
-                'label' => '<img height="22px" src="' . $expand . '">',
+                'label' => '',
+				'icon' => 'fa fa-lg fa-expand slice_columns_icon ',
                 'attributes' => [
-                    "class" => ['btn-default btn_wider slice_columns_no_padding']
+                    "class" => ['btn btn-default btn_wider']
                 ]
             ]
         ]);
