@@ -44,8 +44,11 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.slice_columns_no_padding {
-  padding: 0 !important;
+.slice_columns_icon 
+{
+-webkit-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+transform: rotate(45deg);	
 }
 
 
