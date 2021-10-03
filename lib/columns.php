@@ -28,7 +28,7 @@ class Columns
         $ep->addAdditionalActions([
             'smallerButton' => [
                 'label' => '',
-				'icon' => 'fa fa-lg fa-compress slice_columns_icon ',
+                'icon' => 'fa fa-lg fa-compress slice_columns_icon ',
                 'attributes' => [
                     "class" => ['btn btn-default btn_smaller']
                 ]
