@@ -92,22 +92,19 @@ class Columns
         $modules = explode("|", $addon->getConfig('modules'));
         #dump($ep);
 
-        if (in_array($ep->getParam('module_id'), $modules)) {
+        $definitions = $addon->getConfig('definitions');
+        $definitions = json_decode($definitions, true);  
+	$size = static::getSize($ep->getParam('slice_id'));    
+	    
+        if (in_array($ep->getParam('module_id'), $modules) || !$definitions[$size]) {
             return $subject;
         }
 
-        $size = static::getSize($ep->getParam('slice_id'));
-
-        if ($size == '') {
-            $addon = rex_addon::get('slice_columns');
+        if ($size === '') {
             $size = $addon->getConfig('number_columns');
         }
 
-        $addon = rex_addon::get('slice_columns');
-        $definitions = $addon->getConfig('definitions');
-        $definitions = json_decode($definitions, true);
-
-        if (!rex_request('rex_history_date')) {
+        if (!rex_request('rex_history_date') ) {
             $subject =  "\n" .
                 "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
                 "\n\n" .
