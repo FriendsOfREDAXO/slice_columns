@@ -23,7 +23,7 @@ Es sollten alle Spalten definiert sein, die am Ende verwendet werden.
 Vor allem aber die kleinste und die größte Breite, die durch die Definition möglich sind. 
 
 
-## CSS Mapping für UiKit3.x mit erweiterten Styles
+## Beispiel CSS Mapping für UiKit3.x mit erweiterten Styles
 
 Hier bei 12 Spalten
 
