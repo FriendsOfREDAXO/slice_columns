@@ -19,7 +19,8 @@ Die Spalten können mit dem eigenen CSS oder Framework gemappt werden.
 Ein Beispiel dazu steht direkt nach Installation für Bootstrap bereit. 
 
 **Wichtig**
-Es sollten alle Spalten definieert sein die am Ende verwendet werden. 
+Es sollten alle Spalten definiert sein, die am Ende verwendet werden. 
+Vor allem aber die kleinste und die größte Breite, die durch die Definition möglich sind. 
 
 
 ## CSS Mapping für UiKit3.x mit erweiterten Styles
