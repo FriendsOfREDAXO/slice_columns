@@ -107,7 +107,11 @@ class Columns
         $definitions = $addon->getConfig('definitions');
         $definitions = json_decode($definitions, true);
 
-        if (!rex_request('rex_history_date')) {
+        if (rex_request('rex_history_date') || rex_request('rex_version') ) {
+          $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
+        } 
+        
+        else {
             $subject =  "\n" .
                 "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
                 "\n\n" .
@@ -115,8 +119,6 @@ class Columns
                 "\n" .
                 "echo '</div>'; // column wrapper" .
                 "\n";
-        } else {
-            $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
         }
 
         return $subject;
@@ -135,3 +137,4 @@ class Columns
         return $width;
     }
 }
+
