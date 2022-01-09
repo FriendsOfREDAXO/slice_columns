@@ -11,11 +11,16 @@ if (rex::isBackend() && rex::getUser()) {
     rex_view::setJsProperty('min_width_column', (int)$addon->getConfig('min_width_column'));
     rex_view::setJsProperty('number_columns', (int)$addon->getConfig('number_columns'));
 
-    rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
-
-    rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
-    rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
-
+    // Load assets only on content pages
+     switch (\rex_be_controller::getCurrentPagePart(1)) {
+         case 'content':
+             rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
+             rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
+             rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
+         default:
+             break;
+     }
+ 
     // templates ausschließen	
     $templates = explode("|", $addon->getConfig('templates'));
     if (in_array(rex_article::getCurrent()->getTemplateId(), $templates)) {
