@@ -46,7 +46,7 @@ Ein geeignetes SCSS liegt im Assets-Ordner des AddOns uikit_columns.css
 }
 ```
 
-## GitHub-Repo für Support
+## Support
 
 https://github.com/FriendsOfREDAXO/slice_columns
 
