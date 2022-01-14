@@ -53,7 +53,7 @@ class Columns
         $attributes = [];
 
         if (rex::isBackend()) {
-            if (!preg_match('/<form/', $subject)) {
+            if (!preg_match('/id="REX_FORM"/', $subject)) {
 
                 $addon = rex_addon::get('slice_columns');
                 $number_columns = $addon->getConfig('number_columns');
