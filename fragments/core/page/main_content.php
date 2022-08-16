@@ -5,7 +5,7 @@
  */
 
 $addon = rex_addon::get('slice_columns');
-$sswitch = str_replace('|', '', $addon->getConfig('sidebar_switch'));
+$sswitch = str_replace('|', '', $addon->getConfig('sidebar_switch', ''));
 if ($sswitch != 1)
 {?>
 <section class="rex-main-frame">
