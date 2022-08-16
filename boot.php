@@ -23,9 +23,9 @@ if (rex::isBackend() && rex::getUser()) {
  
     // templates ausschließen	
     $templates = [];
-    if($addon->getConfig('templates'))
+    if($template_list === $addon->getConfig('templates'))
     {    
-    $templates = explode("|", $addon->getConfig('templates'));
+    $templates = explode("|", $template_list));
     }
       if (rex_article::getCurrent() && in_array(rex_article::getCurrent()->getTemplateId(), $templates)) {
     } else {
