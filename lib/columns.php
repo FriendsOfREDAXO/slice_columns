@@ -17,7 +17,7 @@ class Columns
 
         // Module ausschließen	
         $modules = [];
-        $modules = explode("|", $addon->getConfig('modules'));
+        $modules = explode("|", $addon->getConfig('modules',''));
         if (in_array($ep->getModuleId(), $modules) || !rex::getUser()->hasPerm('slice_columns[edit]') || false === rex::getUser()->getComplexPerm('modules')->hasPerm($ep->getModuleId())) {
             return;
         }
@@ -89,7 +89,7 @@ class Columns
         $addon = rex_addon::get('slice_columns');
         // Module ausschließen	
         $modules = [];
-        $modules = explode("|", $addon->getConfig('modules'));
+        $modules = explode("|", $addon->getConfig('modules',''));
         #dump($ep);
 
         if (in_array($ep->getParam('module_id'), $modules)) {
@@ -137,4 +137,5 @@ class Columns
         return $width;
     }
 }
+
 
