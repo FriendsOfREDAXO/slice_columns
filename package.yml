@@ -26,6 +26,7 @@ page:
 default_config:
   number_columns: 12
   number_steps: 1
+  templates:  ''
   min_width_column: 1
   definitions: '{
     "1": "col-sm-1",
