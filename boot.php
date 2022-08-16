@@ -22,8 +22,9 @@ if (rex::isBackend() && rex::getUser()) {
      }
  
     // templates ausschließen	
-    $templates = explode("|", $addon->getConfig('templates'));
-    if (rex_article::getCurrent() && in_array(rex_article::getCurrent()->getTemplateId(), $templates)) {
+    $templates = [];
+    $templates = explode("|", $addon->getConfig('templates',''));
+      if (rex_article::getCurrent() && in_array(rex_article::getCurrent()->getTemplateId(), $templates)) {
     } else {
         // add buttons to slice menu
         rex_extension::register('SLICE_MENU', ['columns', 'addButtons']);
@@ -37,3 +38,4 @@ if (rex::isBackend() && rex::getUser()) {
     // rex_extension::register('SLICE_OUTPUT', array('columns', 'frontend'));
     rex_extension::register('SLICE_SHOW', array('columns', 'frontend'), rex_extension::LATE);
 }
+
