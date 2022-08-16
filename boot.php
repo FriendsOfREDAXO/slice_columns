@@ -25,7 +25,7 @@ if (rex::isBackend() && rex::getUser()) {
     $templates = [];
     if($template_list === $addon->getConfig('templates'))
     {    
-    $templates = explode("|", $template_list));
+    $templates = explode("|", $template_list);
     }
       if (rex_article::getCurrent() && in_array(rex_article::getCurrent()->getTemplateId(), $templates)) {
     } else {
