@@ -1,7 +1,11 @@
 <?php
 
 rex_perm::register('slice_columns[edit]');
-    
+
+if(rex_request('ynewsletter_send') == 1)
+{
+    return;
+}
 
 if (rex::isBackend() && rex::getUser()) {   
     
