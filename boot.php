@@ -1,10 +1,8 @@
 <?php
 
 rex_perm::register('slice_columns[edit]');
-    
+if (rex::isBackend() && rex::getUser() && \rex_be_controller::getCurrentPagePart(1) ==='content') {   
 
-if (rex::isBackend() && rex::getUser()) {   
-    
     $addon = rex_addon::get('slice_columns');
 
     rex_view::setJsProperty('slicesteps', (int)$addon->getConfig('number_steps'));
@@ -31,7 +29,7 @@ if (rex::isBackend() && rex::getUser()) {
     }
 
     rex_extension::register('SLICE_SHOW', array('columns', 'show'));
-} else {
+} elseif(rex::isFrontend()) {
     // rex_extension::register('ART_CONTENT', array('columns', 'frontend'));
     // rex_extension::register('STRUCTURE_CONTENT_BEFORE_SLICES', array('columns', 'frontend'));
     // rex_extension::register('STRUCTURE_CONTENT_AFTER_SLICES', array('columns', 'frontend'));
