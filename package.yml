@@ -1,5 +1,5 @@
 package: slice_columns
-version: 1.0.1
+version: 1.0.2
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/slice_columns
 
@@ -8,7 +8,7 @@ requires:
   redaxo: '^5.12'
   packages:
   php:
-    version: '>=7.1'
+    version: '>=7.4'
 
 page:
   title: Slice-Columns
