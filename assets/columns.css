@@ -66,4 +66,28 @@ transform: rotate(45deg);
   margin-left: auto;
   text-align: right;
 }
+/* Section Styling */
+.slice-section {
+  margin: 0 -5px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px dashed #ccc;
+  clear: both;
+  overflow: hidden;
+}
 
+/* Backend Styling für Sections */
+.in-section {
+  border-left: 3px solid #3bb594;
+  margin-left: 10px;
+}
+
+.in-section:first-of-type {
+  border-top: 3px solid #3bb594;
+  margin-top: 10px;
+}
+
+.in-section:last-of-type {
+  border-bottom: 3px solid #3bb594;
+  margin-bottom: 10px;
+}
