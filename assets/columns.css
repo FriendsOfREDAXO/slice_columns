@@ -91,3 +91,40 @@ transform: rotate(45deg);
   border-bottom: 3px solid #3bb594;
   margin-bottom: 10px;
 }
+
+/* Sectionen stylen */
+.section-container {
+    position: relative;
+    width: 100% !important;
+    border: 2px solid #3bb273;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: rgba(59, 178, 115, 0.05);
+}
+
+.section-container::before {
+    content: "SECTION";
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #3bb273;
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+    border-radius: 3px;
+    z-index: 1;
+}
+
+.section-slice {
+    border-left: 3px solid #3bb273;
+    background-color: rgba(59, 178, 115, 0.1);
+}
+
+.section-content {
+    padding: 15px 0 0 0;
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
