@@ -67,3 +67,48 @@ transform: rotate(45deg);
   text-align: right;
 }
 
+/* Section Styling */
+.slice-section {
+  margin: 0 -5px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px dashed #ccc;
+  clear: both;
+  overflow: hidden;
+}
+
+/* Backend Styling für Sections */
+.in-section {
+  border-left: 3px solid #3bb594;
+  margin-left: 10px;
+}
+
+.in-section:first-of-type {
+  border-top: 3px solid #3bb594;
+  margin-top: 10px;
+}
+
+.in-section:last-of-type {
+  border-bottom: 3px solid #3bb594;
+  margin-bottom: 10px;
+}
+
+/* Section Header im Backend */
+.section-header {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-weight: bold;
+}
+
+.section-controls {
+  display: flex;
+  gap: 5px;
+}
