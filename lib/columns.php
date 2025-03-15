@@ -44,6 +44,41 @@ class Columns
                 ]
             ]
         ]);
+        
+        // Section-Buttons hinzufügen
+        $ep->addAdditionalActions([
+            'addToSectionButton' => [
+                'label' => '',
+                'icon' => 'fa fa-lg fa-object-group',
+                'attributes' => [
+                    "class" => ['btn btn-default btn_add_to_section'],
+                    "title" => 'Zu Section hinzufügen',
+                    "data-slice-id" => $ep->getSliceId()
+                ]
+            ]
+        ]);
+        
+        // Wenn der Slice bereits in einer Section ist, auch einen Button zum Entfernen anbieten
+        $sql = rex_sql::factory();
+        $sql->setQuery('SELECT section_id FROM ' . rex::getTablePrefix() . 'article_slice WHERE id = :id', ['id' => $ep->getSliceId()]);
+        if ($sql->getRows() > 0) {
+            $sectionId = $sql->getValue('section_id');
+            
+            if ($sectionId) {
+                $ep->addAdditionalActions([
+                    'removeFromSectionButton' => [
+                        'label' => '',
+                        'icon' => 'fa fa-lg fa-object-ungroup',
+                        'attributes' => [
+                            "class" => ['btn btn-default btn_remove_from_section'],
+                            "title" => 'Aus Section entfernen',
+                            "data-slice-id" => $ep->getSliceId(),
+                            "data-section-id" => $sectionId
+                        ]
+                    ]
+                ]);
+            }
+        }
     }
 
     public static function show($ep)
@@ -59,9 +94,10 @@ class Columns
                 $number_columns = $addon->getConfig('number_columns');
 
                 $sql = rex_sql::factory();
-                $res = $sql->setQuery('select slice_size from rex_article_slice where id = :id', ['id' => $ep->getParam('slice_id')]);
+                $res = $sql->setQuery('SELECT slice_size, section_id FROM ' . rex::getTablePrefix() . 'article_slice WHERE id = :id', ['id' => $ep->getParam('slice_id')]);
 
                 $width = $res->getValue('slice_size');
+                $sectionId = $res->getValue('section_id');
 
                 if ($width == '') {
                     $width = $number_columns;
@@ -70,14 +106,21 @@ class Columns
                 $css_width = 100 * ($width / $number_columns) . '%';
                 $css_width = str_replace(",", ".", $css_width);
 
-
                 $handler = '
                 <span class="fa fa-arrows slice_columns_handler">handle</span>
                 ';
+                
+                // Wenn der Slice Teil einer Section ist, füge die Section-Klasse hinzu
+                $sectionClass = $sectionId > 0 ? ' in-section section-' . $sectionId : '';
+                
+                // Attribute für die Section
+                $sectionAttributes = $sectionId > 0 ? ' data-section-id="' . $sectionId . '"' : '';
+                
                 // sortablejs
-                $subject = '<li class="dragdrop" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
+                $subject = '<li class="dragdrop' . $sectionClass . '" style="width:' . $css_width . '" data-width="' . $width . '"' . $sectionAttributes . ' data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
             }
         } else {
+            // Frontend-Rendering wird in frontend() behandelt
         }
 
         return $subject;
@@ -90,7 +133,6 @@ class Columns
         // Module ausschließen	
         $modules = [];
         $modules = explode("|", $addon->getConfig('modules',''));
-        #dump($ep);
 
         if (in_array($ep->getParam('module_id'), $modules)) {
             return $subject;
@@ -106,22 +148,125 @@ class Columns
         $addon = rex_addon::get('slice_columns');
         $definitions = $addon->getConfig('definitions');
         $definitions = json_decode($definitions, true);
-
-        if (rex_request('rex_history_date') || rex_request('rex_version') ) {
-          $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
-        } 
         
-        else {
-            $subject =  "\n" .
-                "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
-                "\n\n" .
-                $subject .
-                "\n" .
-                "echo '</div>'; // column wrapper" .
-                "\n";
+        // Hole Section-Informationen des aktuellen Slices
+        $sliceId = $ep->getParam('slice_id');
+        $sql = rex_sql::factory();
+        if (rex_request('rex_history_date')) {
+            $sql->setQuery('SELECT section_id FROM ' . rex::getTablePrefix() . 'article_slice_history WHERE id = :id', ['id' => $sliceId]);
+        } else {
+            $sql->setQuery('SELECT section_id FROM ' . rex::getTablePrefix() . 'article_slice WHERE id = :id', ['id' => $sliceId]);
+        }
+        $sectionId = $sql->getValue('section_id');
+
+        // Wenn der Slice Teil einer Section ist
+        if ($sectionId) {
+            // Prüfe, ob es der erste Slice in der Section ist
+            if (rex_request('rex_history_date')) {
+                $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'article_slice_history WHERE section_id = :section_id AND article_id = :article_id AND clang_id = :clang_id ORDER BY priority LIMIT 1', 
+                    ['section_id' => $sectionId, 'article_id' => $ep->getParam('article_id'), 'clang_id' => $ep->getParam('clang')]);
+            } else {
+                $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'article_slice WHERE section_id = :section_id AND article_id = :article_id AND clang_id = :clang_id ORDER BY priority LIMIT 1', 
+                    ['section_id' => $sectionId, 'article_id' => $ep->getParam('article_id'), 'clang_id' => $ep->getParam('clang')]);
+            }
+            $firstSliceInSection = $sql->getValue('id');
+            
+            // Hole die Section-Einstellungen
+            $sectionSettings = static::getSectionSettings($sectionId);
+            $sectionClass = !empty($sectionSettings['class']) ? ' ' . $sectionSettings['class'] : '';
+            $sectionStyle = !empty($sectionSettings['background']) ? ' style="background-color: ' . $sectionSettings['background'] . ';"' : '';
+            
+            if ($sliceId == $firstSliceInSection) {
+                // Wenn es der erste Slice in der Section ist, beginne eine Section
+                if (rex_request('rex_history_date') || rex_request('rex_version')) {
+                    $subject = '<div class="slice-section section-' . $sectionId . $sectionClass . '"' . $sectionStyle . '><div class="' . $definitions[$size] . '">' . $subject . '</div>';
+                } else {
+                    $sectionClassPhp = !empty($sectionSettings['class']) ? ' ' . $sectionSettings['class'] : '';
+                    $sectionStylePhp = !empty($sectionSettings['background']) ? ' style=\"background-color: ' . $sectionSettings['background'] . ';\"' : '';
+                    
+                    $subject =  "\n" .
+                        "echo '<div class=\"slice-section section-" . $sectionId . $sectionClassPhp . "\"" . $sectionStylePhp . ">'; // section wrapper" .
+                        "\n" .
+                        "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
+                        "\n\n" .
+                        $subject .
+                        "\n" .
+                        "echo '</div>'; // column wrapper" .
+                        "\n";
+                }
+            } else {
+                // Normaler Slice innerhalb einer Section
+                if (rex_request('rex_history_date') || rex_request('rex_version')) {
+                    $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
+                } else {
+                    $subject =  "\n" .
+                        "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
+                        "\n\n" .
+                        $subject .
+                        "\n" .
+                        "echo '</div>'; // column wrapper" .
+                        "\n";
+                }
+            }
+            
+            // Prüfe, ob es der letzte Slice in der Section ist
+            if (rex_request('rex_history_date')) {
+                $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'article_slice_history WHERE section_id = :section_id AND article_id = :article_id AND clang_id = :clang_id ORDER BY priority DESC LIMIT 1', 
+                    ['section_id' => $sectionId, 'article_id' => $ep->getParam('article_id'), 'clang_id' => $ep->getParam('clang')]);
+            } else {
+                $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . 'article_slice WHERE section_id = :section_id AND article_id = :article_id AND clang_id = :clang_id ORDER BY priority DESC LIMIT 1', 
+                    ['section_id' => $sectionId, 'article_id' => $ep->getParam('article_id'), 'clang_id' => $ep->getParam('clang')]);
+            }
+            $lastSliceInSection = $sql->getValue('id');
+            
+            if ($sliceId == $lastSliceInSection) {
+                // Wenn es der letzte Slice in der Section ist, schließe die Section
+                if (rex_request('rex_history_date') || rex_request('rex_version')) {
+                    $subject .= '</div><!-- end of section -->';
+                } else {
+                    $subject .= "\necho '</div>'; // end of section wrapper\n";
+                }
+            }
+        } else {
+            // Normaler Slice ohne Section
+            if (rex_request('rex_history_date') || rex_request('rex_version')) {
+                $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
+            } else {
+                $subject =  "\n" .
+                    "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
+                    "\n\n" .
+                    $subject .
+                    "\n" .
+                    "echo '</div>'; // column wrapper" .
+                    "\n";
+            }
         }
 
         return $subject;
+    }
+
+    /**
+     * Holt die Einstellungen einer Section
+     * 
+     * @param int $sectionId Die ID der Section
+     * @return array Die Section-Einstellungen
+     */
+    private static function getSectionSettings($sectionId)
+    {
+        $settings = [];
+        
+        if (!$sectionId) {
+            return $settings;
+        }
+        
+        $addon = rex_addon::get('slice_columns');
+        $sectionSettings = $addon->getConfig('section_settings', []);
+        
+        if (isset($sectionSettings[$sectionId])) {
+            $settings = $sectionSettings[$sectionId];
+        }
+        
+        return $settings;
     }
 
     private static function getSize($sliceID)
@@ -137,4 +282,3 @@ class Columns
         return $width;
     }
 }
-
