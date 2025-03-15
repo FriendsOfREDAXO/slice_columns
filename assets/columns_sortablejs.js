@@ -13,22 +13,13 @@ $(document).on("rex:ready", function () {
     min_width_column = rex.min_width_column;
 
     var element = document.getElementsByClassName("rex-slices")[0];
-    // var element = document.getElementsByClassName("dragdrop")[0];
 
     var list = Sortable.create(element, {
-      // handle: ".slice_columns_handler",
       handle: ".panel-heading",
       dataIdAttr: "data-slice-id",
       animation: 150,
       ghostClass: "slice_columns_ghost_class",
       onChange: function (evt) {
-        // console.log("old: " + evt.oldDraggableIndex);
-        // console.log("new: " + evt.newDraggableIndex);
-        // console.log("Order:");
-        // console.log(list.toArray());
-        // console.log("Widths:");
-        // console.log(store);
-
         let h = document.getElementsByClassName("dragdrop")[0];
         var article_id = h.getAttribute("data-article-id");
         var clang_id = h.getAttribute("data-clang-id");
@@ -45,18 +36,8 @@ $(document).on("rex:ready", function () {
             console.log(result);
           }
         );
-
-        // console.log(evt.item.getAttribute("data-slice-id"));
       },
     });
-
-    // init structure
-    // a = list.toArray();
-    // // console.log(a);
-    // for (var i = 0; i < a.length; i++) {
-    //   store[a[i]] = "6/6";
-    // }
-    // console.log(store);
 
     const btns_wider = document.getElementsByClassName("btn_wider");
     const btns_smaler = document.getElementsByClassName("btn_smaller");
@@ -67,11 +48,99 @@ $(document).on("rex:ready", function () {
     for (var i = 0; i < btns_wider.length; i++) {
       btns_wider[i].addEventListener("click", wider);
     }
+
+    // Einfacheres Hinzufügen zu Section
+    $(document).on("click", ".btn_add_to_section", function(e) {
+      e.preventDefault();
+      console.log("Add to section button clicked");
+      
+      let parent = $(this).closest(".dragdrop");
+      let sliceId = parent.attr("data-slice-id");
+      let articleId = parent.attr("data-article-id");
+      let clangId = parent.attr("data-clang-id");
+      
+      // Einfachere Version - frage direkt nach der Section-ID
+      let sectionId = prompt("Section-ID eingeben (leer lassen für neue Section):", "");
+      
+      if (sectionId !== null) { // Wenn nicht abgebrochen
+        sectionId = sectionId.trim() === "" ? 0 : parseInt(sectionId);
+        
+        // Slice zur Section hinzufügen
+        $.ajax({
+          url: "index.php?page=content/edit&rex-api-call=section&function=add_to_section",
+          data: {
+            slice_id: sliceId,
+            article_id: articleId,
+            clang: clangId,
+            section_id: sectionId
+          },
+          success: function(result) {
+            console.log("Section API response:", result);
+            try {
+              let response = JSON.parse(result);
+              if (response.status === 'success') {
+                // Seite neu laden
+                window.location.reload();
+              } else {
+                alert("Fehler: " + response.message);
+              }
+            } catch (e) {
+              console.error("Fehler beim Parsen der API-Antwort:", e, result);
+              alert("Fehler bei der Kommunikation mit dem Server.");
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            alert("Fehler bei der Kommunikation mit dem Server: " + error);
+          }
+        });
+      }
+    });
+    
+    // Entfernen aus Section
+    $(document).on("click", ".btn_remove_from_section", function(e) {
+      e.preventDefault();
+      console.log("Remove from section button clicked");
+      
+      if (confirm("Möchtest du diesen Slice wirklich aus der Section entfernen?")) {
+        let parent = $(this).closest(".dragdrop");
+        let sliceId = parent.attr("data-slice-id");
+        let articleId = parent.attr("data-article-id");
+        let clangId = parent.attr("data-clang-id");
+        
+        $.ajax({
+          url: "index.php?page=content/edit&rex-api-call=section&function=remove_from_section",
+          data: {
+            slice_id: sliceId,
+            article_id: articleId,
+            clang: clangId
+          },
+          success: function(result) {
+            console.log("Section API response:", result);
+            try {
+              let response = JSON.parse(result);
+              if (response.status === 'success') {
+                // Seite neu laden
+                window.location.reload();
+              } else {
+                alert("Fehler: " + response.message);
+              }
+            } catch (e) {
+              console.error("Fehler beim Parsen der API-Antwort:", e, result);
+              alert("Fehler bei der Kommunikation mit dem Server.");
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            alert("Fehler bei der Kommunikation mit dem Server: " + error);
+          }
+        });
+      }
+    });
   }
 
   function smaller(el) {
     target = el.target;
-    // let parent = target.closest(".rex-slice");
     let parent = target.closest(".dragdrop");
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
@@ -108,7 +177,6 @@ $(document).on("rex:ready", function () {
 
   function wider(el) {
     target = el.target;
-    // let parent = target.closest(".rex-slice");
     let parent = target.closest(".dragdrop");
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
@@ -150,4 +218,3 @@ $(document).on("rex:ready", function () {
     }
   }
 });
-
