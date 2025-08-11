@@ -7,56 +7,10 @@ $(document).on("rex:ready", function () {
     var min_width_column = 1;
     var store = {};
 
-    console.log("initialising columns...");
+    console.log("initialising columns without drag & drop...");
 
     number_columns = rex.number_columns;
     min_width_column = rex.min_width_column;
-
-    var element = document.getElementsByClassName("rex-slices")[0];
-    // var element = document.getElementsByClassName("dragdrop")[0];
-
-    var list = Sortable.create(element, {
-      // handle: ".slice_columns_handler",
-      handle: ".panel-heading",
-      dataIdAttr: "data-slice-id",
-      animation: 150,
-      ghostClass: "slice_columns_ghost_class",
-      onChange: function (evt) {
-        // console.log("old: " + evt.oldDraggableIndex);
-        // console.log("new: " + evt.newDraggableIndex);
-        // console.log("Order:");
-        // console.log(list.toArray());
-        // console.log("Widths:");
-        // console.log(store);
-
-        let h = document.getElementsByClassName("dragdrop")[0];
-        var article_id = h.getAttribute("data-article-id");
-        var clang_id = h.getAttribute("data-clang-id");
-
-        $.post(
-          "index.php?page=content/edit&rex-api-call=sorter",
-          {
-            function: "updateorder",
-            order: JSON.stringify(list.toArray()),
-            article: article_id,
-            clang: clang_id,
-          },
-          function (result) {
-            console.log(result);
-          }
-        );
-
-        // console.log(evt.item.getAttribute("data-slice-id"));
-      },
-    });
-
-    // init structure
-    // a = list.toArray();
-    // // console.log(a);
-    // for (var i = 0; i < a.length; i++) {
-    //   store[a[i]] = "6/6";
-    // }
-    // console.log(store);
 
     const btns_wider = document.getElementsByClassName("btn_wider");
     const btns_smaler = document.getElementsByClassName("btn_smaller");
@@ -68,9 +22,9 @@ $(document).on("rex:ready", function () {
       btns_wider[i].addEventListener("click", wider);
     }
 
-    // Section-Funktionalität
+    // Section-Funktionalität (mit neuer CSS-Klasse)
     $(".btn_add_to_section").click(function() {
-      let parent = $(this).closest(".dragdrop");
+      let parent = $(this).closest(".slice-column"); // Updated class name
       let sliceId = parent.attr("data-slice-id");
       let articleId = parent.attr("data-article-id");
       let clangId = parent.attr("data-clang-id");
@@ -187,8 +141,8 @@ $(document).on("rex:ready", function () {
       }
     });
     
-    // Section-spezifische Drag & Drop-Konfiguration
-    // Erlaubt das Ziehen ganzer Sections
+    // Section-spezifische Konfiguration ohne Drag & Drop
+    // Sections werden jetzt statisch dargestellt
     $(".slice-section").each(function() {
       let sectionId = $(this).attr("data-section-id");
       
@@ -288,7 +242,7 @@ $(document).on("rex:ready", function () {
   function smaller(el) {
     target = el.target;
     // let parent = target.closest(".rex-slice");
-    let parent = target.closest(".dragdrop");
+    let parent = target.closest(".slice-column"); // Updated class name
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
 
@@ -325,7 +279,7 @@ $(document).on("rex:ready", function () {
   function wider(el) {
     target = el.target;
     // let parent = target.closest(".rex-slice");
-    let parent = target.closest(".dragdrop");
+    let parent = target.closest(".slice-column"); // Updated class name
 
     let attr_width = parseInt(parent.getAttribute("data-width"));
 

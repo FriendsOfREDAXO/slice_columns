@@ -9,15 +9,14 @@ if (rex::isBackend() && rex::getUser() && \rex_be_controller::getCurrentPagePart
     rex_view::setJsProperty('min_width_column', (int)$addon->getConfig('min_width_column'));
     rex_view::setJsProperty('number_columns', (int)$addon->getConfig('number_columns'));
 
-    // Load assets only on content pages
-     switch (\rex_be_controller::getCurrentPagePart(1)) {
-         case 'content':
-             rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
-             rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
-             rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
-         default:
-             break;
-     }
+    // Load assets only on content pages - Drag & Drop functionality removed
+    switch (\rex_be_controller::getCurrentPagePart(1)) {
+        case 'content':
+            rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
+            rex_view::addJsFile($addon->getAssetsUrl('columns_static.js'));
+        default:
+            break;
+    }
  
     // templates ausschließen	
     $templates = [];

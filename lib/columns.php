@@ -105,10 +105,6 @@ class Columns
 
                 $css_width = 100 * ($width / $number_columns) . '%';
                 $css_width = str_replace(",", ".", $css_width);
-
-                $handler = '
-                <span class="fa fa-arrows slice_columns_handler">handle</span>
-                ';
                 
                 // Wenn der Slice Teil einer Section ist, füge die Section-Klasse hinzu
                 $sectionClass = $sectionId > 0 ? ' in-section section-' . $sectionId : '';
@@ -116,8 +112,8 @@ class Columns
                 // Attribute für die Section
                 $sectionAttributes = $sectionId > 0 ? ' data-section-id="' . $sectionId . '"' : '';
                 
-                // sortablejs
-                $subject = '<li class="dragdrop' . $sectionClass . '" style="width:' . $css_width . '" data-width="' . $width . '"' . $sectionAttributes . ' data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '"><ul>' . $subject . '</ul></li>';
+                // Static column structure without drag & drop functionality
+                $subject = '<div class="slice-column' . $sectionClass . '" style="width:' . $css_width . '" data-width="' . $width . '"' . $sectionAttributes . ' data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $subject . '</div>';
             }
         } else {
             // Frontend-Rendering wird in frontend() behandelt
