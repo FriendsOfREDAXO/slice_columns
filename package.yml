@@ -7,7 +7,7 @@ supportpage: https://github.com/FriendsOfREDAXO/slice_columns
 requires:
   redaxo: '^5.12'
   packages:
-    bloecks: '^5.0'
+    bloecks: '^5.0-dev'
   php:
     version: '>=7.4'
 
@@ -30,6 +30,7 @@ default_config:
   templates:  ''
   min_width_column: 1
   definitions: '{
+    "0": "reset",
     "1": "col-sm-1",
     "2": "col-sm-2",
     "3": "col-sm-3",

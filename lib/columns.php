@@ -76,10 +76,13 @@ class Columns
                     $width = $number_columns;
                 }
 
-                $css_width = 100 * ($width / $number_columns) . '%';
+                // Im Backend: Reset-Zustand (0) soll wie der größte Wert aussehen
+                $display_width = ($width == 0) ? $number_columns : $width;
+                $css_width = 100 * ($display_width / $number_columns) . '%';
                 $css_width = str_replace(",", ".", $css_width);
 
                 // HTML-Struktur angepasst für bloecks (div statt li) - ohne Section-Funktionalität
+                // data-width behält den echten Wert (auch 0), aber style verwendet display_width
                 $subject = '<div class="slice-column" style="width:' . $css_width . '" data-width="' . $width . '" data-slice-id="' . $ep->getParam('slice_id') . '" data-clang-id="' . $ep->getParam('clang') . '" data-article-id="' . $ep->getParam('article_id') . '">' . $subject . '</div>';
             }
         } else {
@@ -106,10 +109,13 @@ class Columns
             $width = $number_columns;
         }
 
-        $css_width = 100 * ($width / $number_columns) . '%';
+        // Im Backend: Reset-Zustand (0) soll wie der größte Wert aussehen
+        $display_width = ($width == 0) ? $number_columns : $width;
+        $css_width = 100 * ($display_width / $number_columns) . '%';
         $css_width = str_replace(",", ".", $css_width);
 
         // Füge Breiten-Styles und zusätzliche Daten zu existierendem bloecks-Wrapper hinzu
+        // data-width behält den echten Wert (auch 0), aber style verwendet display_width
         $subject = str_replace(
             'class="bloecks-dragdrop"',
             'class="bloecks-dragdrop slice-column" style="width:' . $css_width . '" data-width="' . $width . '"',
@@ -125,9 +131,13 @@ class Columns
         $addon = rex_addon::get('slice_columns');
         // Module ausschließen	
         $modules = [];
-        $modules = explode("|", $addon->getConfig('modules',''));
+        $modulesConfig = $addon->getConfig('modules','');
+        if (!empty($modulesConfig)) {
+            $modules = explode("|", $modulesConfig);
+        }
 
-        if (in_array($ep->getParam('module_id'), $modules)) {
+        // Ausgeschlossene Module erhalten keinen Wrapper
+        if (!empty($modules) && in_array($ep->getParam('module_id'), $modules)) {
             return $subject;
         }
 
@@ -142,12 +152,31 @@ class Columns
         $definitions = $addon->getConfig('definitions');
         $definitions = json_decode($definitions, true);
 
+        // Prüfe auf "0":"reset" oder "0":"" Definition - kein Wrapper
+        if (isset($definitions['0']) && ($definitions['0'] === 'reset' || $definitions['0'] === '' || $size == '0')) {
+            if ($size == '0') {
+                return $subject; // Keine Wrapper für reset/0-Wert
+            }
+        }
+
+        // Sicherheitscheck: Definition muss existieren
+        if (!isset($definitions[$size])) {
+            return $subject; // Kein Wrapper wenn Definition fehlt
+        }
+
+        $cssClass = $definitions[$size];
+        
+        // Prüfe ob CSS-Klasse "reset" ist - dann kein Wrapper
+        if ($cssClass === 'reset' || $cssClass === '') {
+            return $subject;
+        }
+
         // Einfache Ausgabe ohne Section-Logik
         if (rex_request('rex_history_date') || rex_request('rex_version')) {
-            $subject = '<div class="' . $definitions[$size] . '">' . $subject . '</div>';
+            $subject = '<div class="' . $cssClass . '">' . $subject . '</div>';
         } else {
             $subject =  "\n" .
-                "echo '<div class=\"" . $definitions[$size] . "\">'; // column wrapper" .
+                "echo '<div class=\"" . $cssClass . "\">'; // column wrapper" .
                 "\n\n" .
                 $subject .
                 "\n" .
