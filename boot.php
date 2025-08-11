@@ -9,11 +9,10 @@ if (rex::isBackend() && rex::getUser() && \rex_be_controller::getCurrentPagePart
     rex_view::setJsProperty('min_width_column', (int)$addon->getConfig('min_width_column'));
     rex_view::setJsProperty('number_columns', (int)$addon->getConfig('number_columns'));
 
-    // Load assets only on content pages
+    // Load assets only on content pages - bloecks handles drag & drop (required dependency)
      switch (\rex_be_controller::getCurrentPagePart(1)) {
          case 'content':
              rex_view::addCssFile($addon->getAssetsUrl('columns.css'));
-             rex_view::addJsFile($addon->getAssetsUrl('sortable.min.js'));
              rex_view::addJsFile($addon->getAssetsUrl('columns_sortablejs.js'));
          default:
              break;
@@ -28,7 +27,8 @@ if (rex::isBackend() && rex::getUser() && \rex_be_controller::getCurrentPagePart
         rex_extension::register('SLICE_MENU', ['columns', 'addButtons']);
     }
 
-    rex_extension::register('SLICE_SHOW', array('columns', 'show'));
+    // Register with LATE priority to run after bloecks
+    rex_extension::register('SLICE_SHOW', array('columns', 'show'), rex_extension::LATE);
 } elseif(rex::isFrontend()) {
     // rex_extension::register('ART_CONTENT', array('columns', 'frontend'));
     // rex_extension::register('STRUCTURE_CONTENT_BEFORE_SLICES', array('columns', 'frontend'));

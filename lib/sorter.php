@@ -30,26 +30,8 @@ class rex_api_sorter extends rex_api_function
         }
 
         if ($function === 'updateorder') {
-            $article_id = rex_request('article', 'int', 0);
-			$article_clang = rex_request('clang', 'int', 1);
-            $order = rex_request('order', 'string', '');
-
-            $order = json_decode($order);
-            array_pop($order);
-
-            $sql = rex_sql::factory();
-            foreach ($order as $key => $value) {
-                $sql->setQuery('update rex_article_slice set priority = :prio where id = :id', ['prio' => $key, 'id' => $value]);
-            }
-			if (rex_plugin::get('structure','history')->isAvailable()) {
-            rex_article_slice_history::makeSnapshot($article_id, $article_clang,'slice_columns_updateorder');
-			}
-            rex_article_cache::delete($article_id);
-
-            // $sql = rex_sql::factory();
-            // $sql->setQuery('update rex_article_slice set slice_size = :size where id = :id', ['size' => $width , 'id' => $slice]);
-
-            echo json_encode([$function, $order, $article_id]);
+            // Drag & Drop ordering is handled by bloecks addon (required dependency)
+            echo json_encode(['status' => 'disabled', 'message' => 'Drag & Drop ordering is handled by bloecks addon (required dependency)']);
             exit;
         }
 

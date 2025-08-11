@@ -7,6 +7,7 @@ supportpage: https://github.com/FriendsOfREDAXO/slice_columns
 requires:
   redaxo: '^5.12'
   packages:
+    bloecks: '^5.0'
   php:
     version: '>=7.4'
 
@@ -43,9 +44,6 @@ default_config:
     "12": "col-sm-12"
     }
     '
-conflicts:
-    packages:
-        bloecks/dragndrop: '>=1.0.0'
 
 installer_ignore:
     - .git
