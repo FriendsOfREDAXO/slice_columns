@@ -15,6 +15,27 @@ Screenshot mit AddOn Backend Tools
 - **bloecks-Integration**: Moderne Drag & Drop-Funktionalität
 - **Tastenkürzel**: Shift+Breiter = sofort 100% 
 
+## 🆕 Was ist neu in Version 2.0.0
+
+### Verbesserungen
+- **🎯 Intelligente Button-Steuerung**: Icons ändern sich dynamisch je nach Zustand
+- **🔄 Smart Reset**: Bei maximaler Breite wird automatisch der Wrapper entfernt  
+- **🎨 Bessere UX**: Keine Extra-Buttons mehr, alles über zwei intuitive Buttons
+- **🏗️ Backend-Konsistenz**: Reset-Zustand sieht aus wie volle Breite
+- **⚡ Optimierte Logik**: Bessere Behandlung von Edge-Cases
+
+### Architektur-Änderungen
+- **❌ Drag & Drop entfernt**: Wird jetzt vollständig von bloecks übernommen
+- **🔗 bloecks-Abhängigkeit**: bloecks ^5.0 ist jetzt zwingend erforderlich  
+- **🎯 Fokus auf Spalten**: AddOn konzentriert sich ausschließlich auf Spalten-Management
+- **🧹 Code-Bereinigung**: Entfernung von Legacy-Drag&Drop-Code
+
+### Kompatibilität
+- **✅ Vollständig kompatibel** mit bloecks für moderne Slice-Verwaltung
+- **✅ Backwards-kompatibel** für bestehende CSS-Konfigurationen
+- **✅ Framework-agnostisch** - funktioniert mit allen CSS-Frameworks
+
+
 ## 🔧 Voraussetzungen
 
 - **REDAXO**: ^5.12
@@ -179,25 +200,7 @@ Module oder Templates können vom Spalten-System ausgeschlossen werden:
 <div class="col-sm-6">Right Column</div>
 ```
 
-## 🆕 Was ist neu in Version 1.0.2
 
-### Verbesserungen
-- **🎯 Intelligente Button-Steuerung**: Icons ändern sich dynamisch je nach Zustand
-- **🔄 Smart Reset**: Bei maximaler Breite wird automatisch der Wrapper entfernt  
-- **🎨 Bessere UX**: Keine Extra-Buttons mehr, alles über zwei intuitive Buttons
-- **🏗️ Backend-Konsistenz**: Reset-Zustand sieht aus wie volle Breite
-- **⚡ Optimierte Logik**: Bessere Behandlung von Edge-Cases
-
-### Architektur-Änderungen
-- **❌ Drag & Drop entfernt**: Wird jetzt vollständig von bloecks übernommen
-- **🔗 bloecks-Abhängigkeit**: bloecks ^5.0 ist jetzt zwingend erforderlich  
-- **🎯 Fokus auf Spalten**: AddOn konzentriert sich ausschließlich auf Spalten-Management
-- **🧹 Code-Bereinigung**: Entfernung von Legacy-Drag&Drop-Code
-
-### Kompatibilität
-- **✅ Vollständig kompatibel** mit bloecks für moderne Slice-Verwaltung
-- **✅ Backwards-kompatibel** für bestehende CSS-Konfigurationen
-- **✅ Framework-agnostisch** - funktioniert mit allen CSS-Frameworks
 
 ## 🆘 Support & Hilfe
 
