@@ -8,9 +8,9 @@
 .rex-slice,
 .slice-column,
 .bloecks-dragdrop.slice-column {
-  width: 100%;
-  padding: 5px;
-  margin: 0;
+    width: 100%;
+    padding: 0px;
+    margin-top: 0px;
 }
 
 .rex-slice.rex-slice-output .panel-heading.rex-has-panel-options {
